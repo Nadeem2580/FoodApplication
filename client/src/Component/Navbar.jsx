@@ -1,0 +1,197 @@
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
+import HomeIcon from '@mui/icons-material/Home';
+import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
+import ContactsIcon from '@mui/icons-material/Contacts';
+import RoundaboutLeftIcon from '@mui/icons-material/RoundaboutLeft';
+import { Link } from 'react-router-dom';
+import { Stack } from '@mui/material';
+import saylaniPapa from "../assets/saylaniPapa.png"
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+const pages = [
+    { title: "Home", url: "/Home", icon: <HomeIcon fontSize="small" /> },
+    { title: "Restaurants", url: "/restaurants", icon: <RestaurantMenuIcon fontSize="small" /> },
+    { title: "About", url: "/about", icon: <RoundaboutLeftIcon fontSize="small" /> },
+    { title: "Contact", url: "/contact", icon: <ContactsIcon fontSize="small" /> },
+];
+
+function Navbar() {
+    const [anchorElNav, setAnchorElNav] = React.useState(null);
+    const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const [anchorButton, setAnchorButton] = React.useState(null);
+
+    const handleOpenNavMenu = (event) => {
+        setAnchorElNav(event.currentTarget);
+    };
+    const handleOpenUserMenu = (event) => {
+        setAnchorElUser(event.currentTarget);
+    };
+
+    const handleCloseNavMenu = () => {
+        setAnchorElNav(null);
+    };
+
+    const handleCloseUserMenu = () => {
+        setAnchorElUser(null);
+    };
+    const handleOpenButtonMenu = (event) => {
+        setAnchorButton(event.currentTarget)
+    }
+
+    const handleCloseButtonMenu = () => {
+        setAnchorButton(null)
+    }
+
+    const ButtonswithBascket = () => {
+        return (
+            <Box sx={{ display: "flex", gap: "15px" }}>
+                <IconButton >
+
+                    <ShoppingCartIcon sx={{ color: "#fff" }} />
+
+                </IconButton>
+                <Button sx={{ background: "white", padding: "10px 20px", fontSize: "13px", fontWeight: "700", ":hover": { background: "#3b82f6", color: "#fff" } }}><PersonOutlineIcon /> Sign in</Button>
+                <Button sx={{
+                    border: "1px dashed #fff", color: "#fff", padding: "10px 20px", fontSize: "12px", fontWeight: "700",
+                    ":hover": { background: "#3b82f6", color: "3fff", border: "none", outline: "none", }
+                }}>Get started</Button>
+            </Box>
+        )
+    }
+
+
+    return (
+        <AppBar position="static" sx={{ background: "#8dc63f" }}>
+            <Container maxWidth="xl">
+
+                <Stack justifyContent={"space-between"} direction={"row"}>
+                    {/* Image logo  */}
+                    <Box >
+                        <img src={saylaniPapa} alt="" width={200} height={80} />
+                    </Box>
+                    {/* Home about links are maping */}
+                    <Box sx={{ display: { xs: 'none', md: 'flex', alignItems: "center" } }}>
+                        {pages.map((page) => (
+                            <MenuItem key={page.title} onClick={handleCloseNavMenu}>
+                                <Typography sx={{ textAlign: 'center', fontSize: "13px" }}>
+                                    <Link to={page.url} style={{ textDecoration: "none", color: "white", display: "flex", gap: "5px" }}>
+                                        {page.icon}
+                                        {page.title}
+                                    </Link>
+                                </Typography>
+                            </MenuItem>
+                        ))}
+                    </Box>
+                    <Box sx={{ display: { xs: "none", lg: "flex" }, alignItems: "center" }}>
+                        <ButtonswithBascket />
+                    </Box>
+                    {/* Large screen button and basket (md only) */}
+                    <Box sx={{ display: { xs: "none", md: "flex", lg: "none" }, alignItems: "center" }}>
+                        <IconButton
+                            size="large"
+                            aria-label="account of current user"
+                            aria-controls="menu-button"
+                            aria-haspopup="true"
+                            onClick={handleOpenButtonMenu}
+                            color="inherit"
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <Menu
+                            id="menu-button"
+                            anchorEl={anchorButton}   // ✅ yaha pe anchorButton
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'left',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'left',
+                            }}
+                            open={Boolean(anchorButton)}   // ✅ is menu ka apna state
+                            onClose={handleCloseButtonMenu}
+                            sx={{ marginTop: "18px", marginLeft: "8px" }}
+                        >
+                            {pages.map((page) => (
+                                <MenuItem key={page.title} onClick={handleCloseButtonMenu} sx={{ background: "#8dc63f", ":hover": { background: "#4a7212ff" } }} >
+                                    <Typography sx={{ textAlign: 'center' }}>
+                                        <Link to={page.url} style={{ textDecoration: "none", color: "white", display: "flex", gap: "5px" }}>
+                                            {page.icon}
+                                            {page.title}
+                                        </Link>
+                                    </Typography>
+                                </MenuItem>
+                            ))}
+                            <MenuItem sx={{ background: "#8dc63f", ":hover": { background: "#4a7212ff" } }}>
+                                <ButtonswithBascket />
+                            </MenuItem>
+                        </Menu>
+                    </Box>
+
+                    {/* Mobile menu (xs only) */}
+                    <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }, justifyContent: "end" }}>
+                        <IconButton
+                            size="large"
+                            aria-label="account of current user"
+                            aria-controls="menu-appbar"
+                            aria-haspopup="true"
+                            onClick={handleOpenNavMenu}
+                            color="inherit"
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <Menu
+                            id="menu-appbar"
+                            anchorEl={anchorElNav}
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'left',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'left',
+                            }}
+                            open={Boolean(anchorElNav)}
+                            onClose={handleCloseNavMenu}
+                            sx={{ display: { xs: 'block', md: 'none' } }}
+                        >
+                            {pages.map((page) => (
+                                <MenuItem key={page.title} onClick={handleCloseNavMenu} sx={{ background: "#8dc63f", ":hover": { background: "#4a7212ff" } }} >
+                                    <Typography sx={{ textAlign: 'center' }}>
+                                        <Link to={page.url} style={{ textDecoration: "none", color: "white", display: "flex", gap: "5px" }}>
+                                            {page.icon}
+                                            {page.title}
+                                        </Link>
+                                    </Typography>
+                                </MenuItem>
+                            ))}
+                            <MenuItem sx={{ background: "#8dc63f", ":hover": { background: "#4a7212ff" } }}>
+                                <ButtonswithBascket />
+                            </MenuItem>
+                        </Menu>
+                    </Box>
+
+
+
+                </Stack>
+
+
+            </Container>
+        </AppBar>
+    );
+}
+export default Navbar;
