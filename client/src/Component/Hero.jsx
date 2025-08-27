@@ -10,7 +10,7 @@ const Hero = () => {
                 minHeight: "87vh", backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.8)), url(${pizza})`, backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column"}}>
 
             <Typography
-                sx={{ background: "linear-gradient(90deg, #fff,#fff, #8dc63f, #3b82f6)", fontSize: { xs: "2rem", sm: "3rem", md: "4rem", lg: "5rem" }, fontWeight: "800", lineHeight: "1", backgroundClip: "text", WebkitBackgroundClip: "text", color: "transparent", WebkitTextFillColor: "transparent", textShadow: "2px 2px 8px rgba(0,0,0,0.4)"}}>
+                sx={{ background: "linear-gradient(90deg, #fff,#fff, #8dc63f, #3b82f6)", fontSize: { xs: "2rem", sm: "3rem", md: "4rem", lg: "5rem" }, fontWeight: "800", lineHeight: "1.5", backgroundClip: "text", WebkitBackgroundClip: "text", color: "transparent", WebkitTextFillColor: "transparent", textShadow: "2px 2px 8px rgba(0,0,0,0.4)"}}>
                 Delicious Food
             </Typography>
             <Typography

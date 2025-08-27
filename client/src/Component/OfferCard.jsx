@@ -8,7 +8,7 @@ const OfferCard = () => {
     return (
         <Container sx={{ margin: "20px auto" }}>
             <Grid container spacing={4}>
-                <Grid size={6} sx={{transition : "0.3s",":hover":{transform: "translateY(-5px)"}, background:"linear-gradient( #f8ffecff, #e2ebfaff)",borderRadius:"20px" }}>
+                <Grid size={{ xs: 12, md: 6 }} sx={{transition : "0.3s",":hover":{transform: "translateY(-5px)"}, background:"linear-gradient( #f8ffecff, #e2ebfaff)",borderRadius:"20px" }}>
                     <Stack justifyContent={"center"} alignItems={"center"} sx={{border:"1px solid #8dc63f",borderRadius:"20px", padding:"50px"}} >
 
                         <Box component={"img"} width={"100px"} height={"100px"} sx={{ background: "transparent", marginBottom: "10px" }} src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZ9blB7IBvt5pnkiFbPNDL9ZwUzedHTFX6DQ&s' />
@@ -20,7 +20,7 @@ const OfferCard = () => {
 
                 </Grid>
 
-                <Grid size={6} sx={{transition : "0.3s",":hover":{transform: "translateY(-5px)"},background:"linear-gradient( #f8ffecff, #e2ebfaff)",borderRadius:"20px"}}>
+                <Grid size={{ xs: 12, md: 6 }} sx={{transition : "0.3s",":hover":{transform: "translateY(-5px)"},background:"linear-gradient( #f8ffecff, #e2ebfaff)",borderRadius:"20px"}}>
                     <Stack justifyContent={"center"} alignItems={"center"} sx={{border:"1px solid #8dc63f",borderRadius:"20px", padding:"50px"}}>
 
                         <Box component={"img"} width={"100px"} height={"100px"} sx={{ background: "transparent", marginBottom: "10px" }} src='https://static.vecteezy.com/system/resources/previews/008/492/236/non_2x/delivery-cartoon-illustration-png.png' />

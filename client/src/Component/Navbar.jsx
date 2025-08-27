@@ -11,27 +11,22 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import HomeIcon from '@mui/icons-material/Home';
-import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
-import ContactsIcon from '@mui/icons-material/Contacts';
-import RoundaboutLeftIcon from '@mui/icons-material/RoundaboutLeft';
-import { Link } from 'react-router-dom';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { Link, useNavigate } from 'react-router-dom';
 import { Stack } from '@mui/material';
 import saylaniPapa from "../assets/saylaniPapa.png"
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-const pages = [
-    { title: "Home", url: "/Home", icon: <HomeIcon fontSize="small" /> },
-    { title: "Restaurants", url: "/restaurants", icon: <RestaurantMenuIcon fontSize="small" /> },
-    { title: "About", url: "/about", icon: <RoundaboutLeftIcon fontSize="small" /> },
-    { title: "Contact", url: "/contact", icon: <ContactsIcon fontSize="small" /> },
-];
-
-function Navbar() {
+import Cookie from "js-cookie"
+import axios from "../Pages/Utils/axiosConfig"
+import { useDispatch } from 'react-redux';
+import { setRole } from '../ReduxSlices/slices';
+function Navbar({ links }) {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+  let dispatch = useDispatch() 
     const [anchorButton, setAnchorButton] = React.useState(null);
-
+const navigate=useNavigate()
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
@@ -54,6 +49,13 @@ function Navbar() {
         setAnchorButton(null)
     }
 
+    const logoutFunc = () => {
+        Cookie.remove("token")
+        Cookie.set(null)
+        axios.defaults.baseURL = ""
+        dispatch(setRole(null))
+        navigate("/")
+    }
     const ButtonswithBascket = () => {
         return (
             <Box sx={{ display: "flex", gap: "15px" }}>
@@ -62,11 +64,17 @@ function Navbar() {
                     <ShoppingCartIcon sx={{ color: "#fff" }} />
 
                 </IconButton>
-                <Button sx={{ background: "white", padding: "10px 20px", fontSize: "13px", fontWeight: "700", ":hover": { background: "#3b82f6", color: "#fff" } }}><PersonOutlineIcon /> Sign in</Button>
+                <Link to={"/login"} style={{ textDecoration: "none", color: "#3b82f6", display: "flex", alignItems: "center" }}>
+                    <Button sx={{ background: "white", padding: "10px 20px", fontSize: "13px", fontWeight: "700", ":hover": { background: "#3b82f6", color: "#fff" } }}>
+                        <PersonOutlineIcon /> Sign in </Button></Link>
+
                 <Button sx={{
                     border: "1px dashed #fff", color: "#fff", padding: "10px 20px", fontSize: "12px", fontWeight: "700",
                     ":hover": { background: "#3b82f6", color: "3fff", border: "none", outline: "none", }
                 }}>Get started</Button>
+                <Button onClick={logoutFunc} variant='contained' sx={{ display: "flex", alignItems: "center", gap: "5px", fontSize: "10px", fontWeight: 700 }}>
+                    Log out<LogoutIcon sx={{ fontSize: "12px", color: "#fff" }} />
+                </Button>
             </Box>
         )
     }
@@ -83,7 +91,7 @@ function Navbar() {
                     </Box>
                     {/* Home about links are maping */}
                     <Box sx={{ display: { xs: 'none', md: 'flex', alignItems: "center" } }}>
-                        {pages.map((page) => (
+                        {links.map((page) => (
                             <MenuItem key={page.title} onClick={handleCloseNavMenu}>
                                 <Typography sx={{ textAlign: 'center', fontSize: "13px" }}>
                                     <Link to={page.url} style={{ textDecoration: "none", color: "white", display: "flex", gap: "5px" }}>
@@ -125,7 +133,7 @@ function Navbar() {
                             onClose={handleCloseButtonMenu}
                             sx={{ marginTop: "18px", marginLeft: "8px" }}
                         >
-                            {pages.map((page) => (
+                            {links.map((page) => (
                                 <MenuItem key={page.title} onClick={handleCloseButtonMenu} sx={{ background: "#8dc63f", ":hover": { background: "#4a7212ff" } }} >
                                     <Typography sx={{ textAlign: 'center' }}>
                                         <Link to={page.url} style={{ textDecoration: "none", color: "white", display: "flex", gap: "5px" }}>
@@ -139,6 +147,10 @@ function Navbar() {
                                 <ButtonswithBascket />
                             </MenuItem>
                         </Menu>
+                        <Button onClick={logoutFunc} variant='contained' sx={{ display: "flex", alignItems: "center", gap: "5px", fontSize: "10px", fontWeight: 700 }}>
+                            Log out<LogoutIcon sx={{ fontSize: "12px", color: "#fff" }} />
+                        </Button>
+
                     </Box>
 
                     {/* Mobile menu (xs only) */}
@@ -169,7 +181,7 @@ function Navbar() {
                             onClose={handleCloseNavMenu}
                             sx={{ display: { xs: 'block', md: 'none' } }}
                         >
-                            {pages.map((page) => (
+                            {links.map((page) => (
                                 <MenuItem key={page.title} onClick={handleCloseNavMenu} sx={{ background: "#8dc63f", ":hover": { background: "#4a7212ff" } }} >
                                     <Typography sx={{ textAlign: 'center' }}>
                                         <Link to={page.url} style={{ textDecoration: "none", color: "white", display: "flex", gap: "5px" }}>
@@ -179,10 +191,12 @@ function Navbar() {
                                     </Typography>
                                 </MenuItem>
                             ))}
+
                             <MenuItem sx={{ background: "#8dc63f", ":hover": { background: "#4a7212ff" } }}>
                                 <ButtonswithBascket />
                             </MenuItem>
                         </Menu>
+
                     </Box>
 
 

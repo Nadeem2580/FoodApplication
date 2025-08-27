@@ -8,27 +8,42 @@ import HomeCards from '../../Component/Cards'
 import { Container, Grid } from '@mui/material'
 import SpecialOffer from '../../Component/SpecialOffer'
 import OfferCard from '../../Component/OfferCard'
-
+import JoiningHeading from '../../Component/JoiningHeading'
+import VendorClientCard from '../../Component/VendorClientCard'
+import Footer from '../../Component/Footer'
+import HomeIcon from '@mui/icons-material/Home';
+import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
+import ContactsIcon from '@mui/icons-material/Contacts';
+import RoundaboutLeftIcon from '@mui/icons-material/RoundaboutLeft';
 const Home = () => {
+  const homeLink = [
+    { title: "Home", url: "/Home", icon: <HomeIcon fontSize="small" /> },
+    { title: "Restaurants", url: "/restaurants", icon: <RestaurantMenuIcon fontSize="small" /> },
+    { title: "About", url: "/about", icon: <RoundaboutLeftIcon fontSize="small" /> },
+    { title: "Contact", url: "/contact", icon: <ContactsIcon fontSize="small" /> },
+  ];
+
   return (
     <>
-      <Navbar />
+      <Navbar links={homeLink} />
       <Hero />
       <Heading />
       <CardSlider />
       <FeatureHeading />
 
-      <Container sx={{marginTop:"60px"}}>
-      <Grid container spacing={2}>
-        <Grid size={{ xs: 6, md: 4 }}> <HomeCards /> </Grid>
-        <Grid  size={{ xs: 6, md: 4 }}> <HomeCards /> </Grid>
-        <Grid  size={{ xs: 6, md: 4 }}> <HomeCards /> </Grid>
-        <Grid  size={{ xs: 6, md: 4 }}> <HomeCards /> </Grid>
-      </Grid>
+      <Container sx={{ marginTop: "60px" }}>
+        <Grid container spacing={2}>
+          <Grid size={{ xs: 6, md: 4 }}> <HomeCards /> </Grid>
+          <Grid size={{ xs: 6, md: 4 }}> <HomeCards /> </Grid>
+          <Grid size={{ xs: 6, md: 4 }}> <HomeCards /> </Grid>
+          <Grid size={{ xs: 6, md: 4 }}> <HomeCards /> </Grid>
+        </Grid>
       </Container>
-    <SpecialOffer />
-    <OfferCard />
-
+      <SpecialOffer />
+      <OfferCard />
+      <JoiningHeading />
+      <VendorClientCard />
+      <Footer />
     </>
   )
 }
