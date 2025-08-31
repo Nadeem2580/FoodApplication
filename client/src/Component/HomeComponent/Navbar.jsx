@@ -14,19 +14,19 @@ import MenuItem from '@mui/material/MenuItem';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Link, useNavigate } from 'react-router-dom';
 import { Stack } from '@mui/material';
-import saylaniPapa from "../assets/saylaniPapa.png"
+import saylaniPapa from "../../assets/saylaniPapa.png"
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Cookie from "js-cookie"
-import axios from "../Pages/Utils/axiosConfig"
+import axios from "../../Pages/Utils/axiosConfig"
 import { useDispatch } from 'react-redux';
-import { setRole } from '../ReduxSlices/slices';
+import { setRole } from '../../ReduxSlices/slices';
 function Navbar({ links }) {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
-  let dispatch = useDispatch() 
+    let dispatch = useDispatch()
     const [anchorButton, setAnchorButton] = React.useState(null);
-const navigate=useNavigate()
+    const navigate = useNavigate()
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };

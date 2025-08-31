@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card, Typography, Box, Button, Container, Grid } from "@mui/material";
-import logo from "../assets/saylaniPapa.png"
+import logo from "../../assets/saylaniPapa.png"
 import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
 import TwitterIcon from "@mui/icons-material/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";

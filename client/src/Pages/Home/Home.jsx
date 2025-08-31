@@ -1,20 +1,20 @@
 import React from 'react'
-import Navbar from '../../Component/Navbar'
-import Hero from '../../Component/Hero'
-import Heading from '../../Component/Heading'
-import CardSlider from '../../Component/CardSlider'
-import FeatureHeading from '../../Component/FeatureHeading'
-import HomeCards from '../../Component/Cards'
 import { Container, Grid } from '@mui/material'
-import SpecialOffer from '../../Component/SpecialOffer'
-import OfferCard from '../../Component/OfferCard'
-import JoiningHeading from '../../Component/JoiningHeading'
-import VendorClientCard from '../../Component/VendorClientCard'
-import Footer from '../../Component/Footer'
 import HomeIcon from '@mui/icons-material/Home';
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import ContactsIcon from '@mui/icons-material/Contacts';
 import RoundaboutLeftIcon from '@mui/icons-material/RoundaboutLeft';
+import Navbar from '../../Component/HomeComponent/Navbar';
+import Hero from '../../Component/HomeComponent/Hero';
+import Heading from '../../Component/HomeComponent/Heading';
+import CardSlider from '../../Component/HomeComponent/CardSlider';
+import FeatureHeading from '../../Component/HomeComponent/FeatureHeading';
+import HomeCards from '../../Component/HomeComponent/Cards';
+import SpecialOffer from '../../Component/HomeComponent/SpecialOffer';
+import OfferCard from '../../Component/HomeComponent/OfferCard';
+import JoiningHeading from '../../Component/HomeComponent/JoiningHeading';
+import VendorClientCard from '../../Component/HomeComponent/VendorClientCard';
+import Footer from '../../Component/HomeComponent/Footer';
 const Home = () => {
   const homeLink = [
     { title: "Home", url: "/Home", icon: <HomeIcon fontSize="small" /> },

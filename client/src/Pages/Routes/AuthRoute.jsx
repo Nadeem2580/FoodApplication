@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { Navigate, Outlet, useNavigate } from 'react-router-dom'
-import useAppContext from '../../../Context/Context'
 import { useSelector } from 'react-redux'
 
 const AuthRoute = () => {

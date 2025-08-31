@@ -9,8 +9,14 @@ const counterSlice = createSlice({
         isLoading: false,
         token: null,
         userType: null,
-        refresh: false,
+        isRefresh: false,
         role: null,
+        restaurant: [],
+        addFood: false,
+        editFood: false,
+        selectedRestaurant: {},
+        selectedFood: {},
+        createResModal: false
     },
 
     reducers: {
@@ -25,6 +31,34 @@ const counterSlice = createSlice({
         setRole: (state, action) => {
             state.role = action.payload
             console.log(state.role, "role")
+        },
+
+        setIsRefresh: (state, action) => {
+            state.isRefresh = action.payload
+        },
+        setRestaurant: (state, action) => {
+            state.restaurant = action.payload
+        },
+        setAddFood: (state, action) => {
+            state.addFood = action.payload
+            console.log(state.addFood)
+        },
+        setSelectedRestaurant: (state, action) => {
+            state.selectedRestaurant = action.payload
+            console.log(state.selectedRestaurant, "selectedRestaurant")
+        },
+        setSelectedFood: (state, action) => {
+            state.selectedFood = action.payload
+            console.log(state.selectedFood, "selectedRestaurant")
+        },
+        setCreateResModal: (state, action) => {
+            state.createResModal = action.payload
+            console.log(state.createResModal, "createResModal")
+
+        },
+        setEditFood: (state, action) => {
+            state.editFood = action.payload
+            console.log(state.editFood , "setEditFood")
         }
     }
 
@@ -32,10 +66,10 @@ const counterSlice = createSlice({
 
 
 const { actions, reducer } = counterSlice
-const { addCount, setToken, setRole } = actions
+const { setEditFood, addCount, setToken, setRole, setIsRefresh, setRestaurant, setAddFood, setSelectedRestaurant, setCreateResModal, setSelectedFood } = actions
 
 const counterReducer = reducer
 
 export {
-    counterReducer, setToken, addCount, setRole
+    counterReducer, setEditFood, setToken, addCount, setRole, setIsRefresh, setRestaurant, setAddFood, setSelectedRestaurant, setCreateResModal, setSelectedFood
 }

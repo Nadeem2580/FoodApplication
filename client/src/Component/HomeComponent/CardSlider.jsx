@@ -1,15 +1,15 @@
 import React from "react";
 import { Box } from "@mui/material";
-import slider1 from "../assets/slider 1.webp"
-import slider2 from "../assets/silder 2.jpg"
-import slider3 from "../assets/slider 3.jpeg"
-import slider4 from "../assets/slider4.jpg"
-import slider5 from "../assets/slider5.webp"
-import slider6 from "../assets/slider 6.jpeg"
-import slider7 from "../assets/slider 7.webp"
-import slider8 from "../assets/slider 8.jpeg"
-import slider9 from "../assets/slider 9.jpg"
-import slider10 from "../assets/slider 10.webp"
+import slider1 from "../../assets/slider 1.webp"
+import slider2 from "../../assets/silder 2.jpg"
+import slider3 from "../../assets/slider 3.jpeg"
+import slider4 from "../../assets/slider4.jpg"
+import slider5 from "../../assets/slider5.webp"
+import slider6 from "../../assets/slider 6.jpeg"
+import slider7 from "../../assets/slider 7.webp"
+import slider8 from "../../assets/slider 8.jpeg"
+import slider9 from "../../assets/slider 9.jpg"
+import slider10 from "../../assets/slider 10.webp"
 const totalItems = 10;
 const animationDuration = 30;
 

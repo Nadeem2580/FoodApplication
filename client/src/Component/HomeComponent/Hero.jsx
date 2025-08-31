@@ -1,5 +1,5 @@
 import React from 'react'
-import pizza from "../assets/pizza.jpg"
+import pizza from "../../assets/pizza.jpg"
 import { Box, Button, Typography } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';

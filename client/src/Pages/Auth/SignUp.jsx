@@ -22,12 +22,9 @@ import { Controller, useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import toastAlert from "../Utils/utils";
-import useAppContext from "../../../Context/Context";
+import api from "../Utils/axiosConfig";
 
 const SignUp = () => {
-  const location = useLocation();
-  const isLoginPage = location.pathname === "/login";
-  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
   const signUpSchema = yup.object({
@@ -42,7 +39,6 @@ const SignUp = () => {
     type: yup.string().required(),
   });
 
-  const { axios } = useAppContext()
   const {
     handleSubmit,
     formState: { errors },
@@ -61,7 +57,7 @@ const SignUp = () => {
 
   const submitSignup = async (obj) => {
     try {
-      const user = await axios.post("/api/auth/signup", obj)
+      const user = await api.post("/api/auth/signup", obj)
       toastAlert({
         type: "success",
         message: "Congratulation! Successfully Sign up",

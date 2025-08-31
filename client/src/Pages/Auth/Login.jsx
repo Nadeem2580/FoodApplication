@@ -20,9 +20,9 @@ import { Controller, set, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import toastAlert from "../Utils/utils";
-import axios from "../Utils/axiosConfig"
 import { useDispatch, useSelector } from "react-redux";
 import { setRole } from "../../ReduxSlices/slices";
+import api from "../Utils/axiosConfig";
 
 const LoginPage = () => {
     const navigate = useNavigate()
@@ -44,16 +44,16 @@ const LoginPage = () => {
     });
     const submitLogin = async (obj) => {
         try {
-            const res = await axios.post("/api/auth/login", obj)
-            let userRole = null
+            const res = await api.post("/api/auth/login", obj)
+            let userRole;
             if (!res.data.status) {
                 return toastAlert({
                     type: "false",
                     message: res.data.message
                 })
             }
-            Cookie.set("token", res.data.token)
             userRole = res.data.data.type
+            Cookie.set("token", res.data.token)
             Cookie.set("role", userRole)
             dispatch(setRole(userRole))
             toastAlert({

@@ -1,7 +1,16 @@
-import { Navigate, Route, Routes } from 'react-router-dom'
+import ContactsIcon from '@mui/icons-material/Contacts'
+import HomeIcon from '@mui/icons-material/Home'
+import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu'
+import RoundaboutLeftIcon from '@mui/icons-material/RoundaboutLeft'
+import Cookie from "js-cookie"
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Route, Routes } from 'react-router-dom'
 import { Bounce, ToastContainer } from 'react-toastify'
-import useAppContext from '../Context/Context'
 import './App.css'
+import Navbar from './Component/HomeComponent/Navbar'
+import VendorLayout from './Component/vendor/Layout/Layout'
+import AdminDashboard from "./Pages/Admin/AdminDashboard"
 import LoginPage from './Pages/Auth/Login'
 import SignUp from './Pages/Auth/SignUp'
 import UserDashboard from './Pages/Client/userDashboard'
@@ -10,19 +19,17 @@ import AdminRoute from './Pages/Routes/AdminRoute'
 import AuthRoute from './Pages/Routes/AuthRoute'
 import ClientRoute from './Pages/Routes/ClientRoute'
 import VendorRoute from './Pages/Routes/VendorRoute'
+import api from './Pages/Utils/axiosConfig'
 import VendorDahsboard from './Pages/Vendor/VendorDahsboard'
-import AdminDashboard from "./Pages/Admin/AdminDashboard"
-import { useSelector, useDispatch } from 'react-redux'
-import { addCount, setRole, setToken } from './ReduxSlices/slices'
-import { Button } from '@mui/material'
-import { useEffect } from 'react'
-import axios from "axios"
-import Cookie from "js-cookie"
-import Navbar from './Component/Navbar'
-import HomeIcon from '@mui/icons-material/Home';
-import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
-import ContactsIcon from '@mui/icons-material/Contacts';
-import RoundaboutLeftIcon from '@mui/icons-material/RoundaboutLeft';
+import { setRole, setToken } from './ReduxSlices/slices'
+import Foods from './Pages/Vendor/Foods'
+import Orders from './Pages/Vendor/Orders'
+import RestaurantPage from './Pages/Vendor/Restaurant'
+import AdminVendor from './Pages/Admin/AdminVendor'
+import AdminUsers from './Pages/Admin/AdminUsers'
+import AdminRestaurant from './Pages/Admin/AdminRestaurant'
+import AdminLayout from './Component/admin/AdminLayout'
+
 function App() {
 
   const { token, role } = useSelector((store) => store.Counter)
@@ -35,9 +42,9 @@ function App() {
       dispatch(setToken(token))
       dispatch(setRole(userRole))
     }
-  }, [role])
+  }, [])
 
- const homeLink = [
+  const homeLink = [
     { title: "Home", url: "/Home", icon: <HomeIcon fontSize="small" /> },
     { title: "Restaurants", url: "/restaurants", icon: <RestaurantMenuIcon fontSize="small" /> },
     { title: "About", url: "/about", icon: <RoundaboutLeftIcon fontSize="small" /> },
@@ -49,18 +56,24 @@ function App() {
       <Routes>
 
         <Route element={<AuthRoute />}>
-        <Route index element={<Home />} />
+          <Route index element={<Home />} />
           <Route path='/login' element={<LoginPage />} />
           <Route path='/signup' element={<SignUp />} />
         </Route>
 
-        <Route element={<AdminRoute />} >
+        <Route element={<AdminLayout> <AdminRoute /></AdminLayout>} >
           <Route path='/admin-dashboard' element={<AdminDashboard />} />
+          <Route path='/admin-vendor' element={<AdminVendor />} />
+          <Route path='/admin-user' element={<AdminUsers />} />
+          <Route path='/admin-restaurant' element={<AdminRestaurant />} />
         </Route>
 
-        <Route element={<VendorRoute />}>
+        <Route element={<VendorLayout><VendorRoute /></VendorLayout>}>
 
           <Route path='/vendor-dashboard' element={<VendorDahsboard />} />
+          <Route path='/vendor-restaurant' element={<RestaurantPage />} />
+          <Route path="/vendor-food-items" element={<Foods />} />
+          <Route path="/vendor-orders" element={<Orders />} />
         </Route>
 
         <Route element={<ClientRoute />}>

@@ -1,6 +1,4 @@
 import { Navigate, Outlet, useNavigate } from "react-router-dom";
-import useAppContext from "../../../Context/Context";
-import Loading from "../../../Loader/Loading";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
