@@ -29,6 +29,10 @@ import AdminVendor from './Pages/Admin/AdminVendor'
 import AdminUsers from './Pages/Admin/AdminUsers'
 import AdminRestaurant from './Pages/Admin/AdminRestaurant'
 import AdminLayout from './Component/admin/AdminLayout'
+import UserNavbar from './Component/user/UserNavbar'
+import AllFoods from './Component/user/AllFoods'
+import ConfirmOrdder from './Component/user/ConfirmOrdder'
+import UserOrder from './Pages/Client/Orders'
 
 function App() {
 
@@ -76,11 +80,19 @@ function App() {
           <Route path="/vendor-orders" element={<Orders />} />
         </Route>
 
-        <Route element={<ClientRoute />}>
+        <Route element={<UserNavbar > <ClientRoute /> </UserNavbar>}>
 
-          <Route path='/user-dashboard' element={<Navbar links={homeLink}><UserDashboard /></Navbar>} />
+          <Route path='/user-dashboard' element={<UserDashboard />} />
+          <Route path='/all-foods/:id' element={<AllFoods />} />
+          <Route path='/all-user-orders' element={<UserOrder />} />
+        
         </Route>
+        
+        
+        <Route element={<ClientRoute />}>
+          <Route path='/confirm-orders' element={<ConfirmOrdder />} />
 
+        </Route>
       </Routes >
 
 

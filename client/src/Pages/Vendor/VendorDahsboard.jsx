@@ -1,4 +1,5 @@
 import { Box, Button, Chip, Container, Grid, Stack, Typography } from '@mui/material'
+import Cookie from "js-cookie"
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Loading from '../../../Loader/Loading'
@@ -6,24 +7,28 @@ import food from "../../assets/food.png"
 import orderImage from "../../assets/order.png"
 import rating from "../../assets/rating.png"
 import restaurantsImage from "../../assets/restaurant.png"
+import RestaurantCard from '../../Component/vendor/Cards/RestaurantCard'
 import CreateRestaurant from '../../Component/vendor/Modal/CreateRestaurant'
 import api from '../../Pages/Utils/axiosConfig'
-import { setIsRefresh, setRestaurant, setCreateResModal } from '../../ReduxSlices/slices'
+import { setCreateResModal, setRestaurant } from '../../ReduxSlices/slices'
 import toastAlert from '../Utils/utils'
-import RestaurantCard from '../../Component/vendor/Cards/RestaurantCard'
-import Cookie from "js-cookie"
-import AddFoodModal from '../../Component/vendor/Modal/addFoodModal'
+
+
+
 const VendorDahsboard = () => {
+  
     const [selectRestaurant, setSelectRestaurant] = useState({})
     const { role, restaurant, isRefresh, createResModal } = useSelector((store) => store.Counter)
-
+    const [val, setVal] = useState("");
+   
     const dispatch = useDispatch()
     useEffect(() => {
+
         if (role) {
             fetchRestaurants()
         }
     }, [role, isRefresh])
-
+   
 
     const fetchRestaurants = async () => {
         try {
@@ -212,14 +217,23 @@ const VendorDahsboard = () => {
 
                     ) : (
                         restaurant.map((rest) => (
-                            <Grid size={{xs:12 ,md:6 , lg:4 , xl:3 }}>
-                                <RestaurantCard key={rest._id} restaurant={rest} />
+                            <Grid key={rest._id} size={{ xs: 12, md: 6, lg: 4, xl: 3 }}>
+                                <RestaurantCard restaurant={rest} />
                             </Grid>
                         ))
 
                     )}
                 </Grid>
             </Container>
+
+            <Box>
+                <input type="text" placeholder='enter message' onChange={(e) => setVal(e.target.value)} />
+                <button onClick={check}>Send</button>
+
+            </Box>
+
+
+
 
 
             {createResModal && <CreateRestaurant open={createResModal} setOpen={dispatch(setCreateResModal(true))} isRefresh={isRefresh} restaurant={selectRestaurant} />}

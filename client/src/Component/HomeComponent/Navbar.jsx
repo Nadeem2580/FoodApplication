@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { Stack } from '@mui/material';
 import saylaniPapa from "../../assets/saylaniPapa.png"
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
@@ -21,7 +21,7 @@ import Cookie from "js-cookie"
 import axios from "../../Pages/Utils/axiosConfig"
 import { useDispatch } from 'react-redux';
 import { setRole } from '../../ReduxSlices/slices';
-function Navbar({ links }) {
+function Navbar( {  links }) {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     let dispatch = useDispatch()
@@ -68,10 +68,7 @@ function Navbar({ links }) {
                     <Button sx={{ background: "white", padding: "10px 20px", fontSize: "13px", fontWeight: "700", ":hover": { background: "#3b82f6", color: "#fff" } }}>
                         <PersonOutlineIcon /> Sign in </Button></Link>
 
-                <Button sx={{
-                    border: "1px dashed #fff", color: "#fff", padding: "10px 20px", fontSize: "12px", fontWeight: "700",
-                    ":hover": { background: "#3b82f6", color: "3fff", border: "none", outline: "none", }
-                }}>Get started</Button>
+                
                 <Button onClick={logoutFunc} variant='contained' sx={{ display: "flex", alignItems: "center", gap: "5px", fontSize: "10px", fontWeight: 700 }}>
                     Log out<LogoutIcon sx={{ fontSize: "12px", color: "#fff" }} />
                 </Button>
@@ -81,6 +78,7 @@ function Navbar({ links }) {
 
 
     return (
+        <>
         <AppBar position="static" sx={{ background: "#8dc63f" }}>
             <Container maxWidth="xl">
 
@@ -90,7 +88,7 @@ function Navbar({ links }) {
                         <img src={saylaniPapa} alt="" width={200} height={80} />
                     </Box>
                     {/* Home about links are maping */}
-                    <Box sx={{ display: { xs: 'none', md: 'flex', alignItems: "center" } }}>
+                    <Box sx={{ display: { xs: 'none', lg: 'flex', alignItems: "center" } }}>
                         {links.map((page) => (
                             <MenuItem key={page.title} onClick={handleCloseNavMenu}>
                                 <Typography sx={{ textAlign: 'center', fontSize: "13px" }}>
@@ -198,14 +196,12 @@ function Navbar({ links }) {
                         </Menu>
 
                     </Box>
-
-
-
                 </Stack>
-
-
             </Container>
         </AppBar>
-    );
+<Outlet />
+        </>
+
+);
 }
 export default Navbar;

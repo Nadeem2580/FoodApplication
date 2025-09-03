@@ -166,13 +166,14 @@ export default function VendorLayout({ children }) {
                     { title: "Foods Item", url: "/vendor-food-items", icon: <FastfoodIcon sx={{ color: "#8dc63f" }} /> },
                     { title: "Orders", url: "/vendor-orders", icon: <FlatwareIcon sx={{ color: "#8dc63f" }} /> }].map((page, index) => (
                         <ListItem key={page.title} disablePadding>
+                                <Link to={page.url} style={{ textDecoration: "none", color: "#3b82f6" }}>
                             <ListItemButton>
                                 <ListItemIcon>
                                     {page.icon}
                                 </ListItemIcon>
-                                <Link to={page.url} style={{ textDecoration: "none", color: "#3b82f6" }}>
-                                    <Typography sx={{ fontSize: "14px", ":hover": { textDecoration: "underline" } }}>{page.title}</Typography></Link>
+                                    <Typography sx={{ fontSize: "14px", ":hover": { textDecoration: "underline" } }}>{page.title}</Typography>
                             </ListItemButton>
+                                    </Link>
                         </ListItem>
                     ))}
                 </List>

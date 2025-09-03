@@ -1,15 +1,14 @@
-import express from "express"
 import cors from "cors"
-import dbConnect from "./Src/Config/dbConnected.js"
 import dotenv from "dotenv"
-import imageRoute from "./Src/Routes/imageRoute/imageRoute.js"
-import vendorRouter from "./Src/Routes/vendorRoute/restuatrantRoute.js"
-import authRouter from "./Src/Routes/authRoute/authRoute.js"
+import express from "express"
+import http from "http"
+import { Server } from "socket.io"
+import dbConnect from "./Src/Config/dbConnected.js"
 import adminRoute from "./Src/Routes/adminRoute/adminRoute.js"
-import http from "http";
-import { Server } from "socket.io";
-import { socketAuth } from "./Src/Middleware/SocketMidlleware.js"
+import authRouter from "./Src/Routes/authRoute/authRoute.js"
+import imageRoute from "./Src/Routes/imageRoute/imageRoute.js"
 import orderRouter from "./Src/Routes/orderRoute/oderRoutes.js"
+import vendorRouter from "./Src/Routes/vendorRoute/restuatrantRoute.js"
 
 dotenv.config()
 
@@ -43,13 +42,12 @@ app.use("/api/orders", orderRouter);
 app.use("/", (req, res) => res.send("Server Up"))
 
 // Socket connection
-socketAuth(io);
+app.set("io", io);
+
 io.on("connection", (socket) => {
-  console.log("socket connected", socket.id)
 
   // Example socket event
   socket.on("message", (data) => {
-    console.log("Message received:", data)
     io.emit("message", data) // broadcast to all clients
   })
 })

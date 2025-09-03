@@ -1,23 +1,28 @@
-// models/Order.js
 import mongoose from "mongoose";
 
 const itemSchema = new mongoose.Schema({
-    foodId: String,
-    name: String,
-    qty: Number,
-    price: Number
+    foodId: { type: mongoose.Schema.Types.ObjectId, ref: "food", required: true }, // Food reference
+    name: { type: String, required: true },
+    price: { type: Number, required: true },
+    quantity: { type: Number, required: true, min: 1 }
 });
 
 const orderSchema = new mongoose.Schema({
-    customerId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    restaurantId: { type: mongoose.Schema.Types.ObjectId, ref: "Restaurant" },
+    customerId: { type: mongoose.Schema.Types.ObjectId, ref: "users", required: true }, // User reference
+    restaurantId: { type: mongoose.Schema.Types.ObjectId, ref: "restaurant", required: true }, // Restaurant reference
     items: [itemSchema],
-    totalAmount: Number,
-    status: { type: String, default: "pending" }, // pending, accepted, preparing, delivered, rejected
-    createdAt: { type: Date, default: Date.now }
+    totalAmount: { type: Number, required: true },
+    paymentMethod: { type: String },
+    status: {
+        type: String,
+        enum: ["pending", "accepted", "preparing", "on_the_way", "delivered", "rejected"],
+        default: "pending"
+    },
+    createdAt: { type: Date, default: Date.now },
 });
 
-const ordersSchema = mongoose.model("Order", orderSchema);
 
 
-export default ordersSchema 
+const OrderModel = mongoose.model("orders", orderSchema);
+
+export default OrderModel;

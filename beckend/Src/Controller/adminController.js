@@ -66,7 +66,6 @@ export const get_update_user_vendor = async (req, res) => {
         const body = req.body
 
         const response = await userModel.findByIdAndUpdate(id, body, { new: true })
-        console.log(res)
         res.status(200).json({
             message: `User isVerified updated successfully`,
             status: true,
@@ -88,7 +87,6 @@ export const get_update_restaurant = async (req, res) => {
         const body = req.body
 
         const response = await RestaurantModel.findByIdAndUpdate(id, body, { new: true })
-        console.log(res)
         res.status(200).json({
             message: `User Restaurant updated successfully`,
             status: true,

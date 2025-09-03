@@ -28,7 +28,6 @@ const VendorClientCard = () => {
               </ul>
             </Box>
 
-            <Button variant='contained' sx={{ background: "linear-gradient(to Right ,#8dc63f, #3b82f6)" }}>Claim Offer</Button>
           </Stack>
         </Grid>
 
@@ -52,7 +51,6 @@ const VendorClientCard = () => {
               </ul>
             </Box>
 
-            <Button variant='contained' sx={{ background: "linear-gradient(to Right ,#8dc63f, #3b82f6)" }}>Browse Menu</Button>
           </Stack>
         </Grid>
       </Grid>

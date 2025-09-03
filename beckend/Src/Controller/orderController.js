@@ -1,64 +1,105 @@
-// controllers/orderController.js
-import ordersSchema from "../Model/orderModel.js";
+import FoodModel from "../Model/FoodSchema.js"
+import OrderModel from "../Model/orderModel.js"
+import RestaurantModel from "../Model/restaurantSchema.js"
 
-/**
- * POST /api/orders
- * Body: { restaurantId, items[], totalAmount }
- * req.user expected from auth (if available)
- */
-export const placeOrder = async (req, res) => {
+
+export const fetch_restaurant = async (req, res) => {
   try {
-    const io = req.app.get("io");
-    const { restaurantId, items, totalAmount } = req.body;
-    const customerId = req.user?._id || null; // optional
-    const order = await ordersSchema.create({ customerId, restaurantId, items, totalAmount, status: "pending" });
 
-    // notify vendor room
-    io.to(`vendor:${restaurantId}`).emit("order:new", order);
+    const response = await RestaurantModel.find({ approvedStatus: "approved" }).limit(5)
+    res.status(200).json({
+      message: "Fetch all restaurant",
+      status: true,
+      data: response
+    })
 
-    // optionally notify specific admin/others
-    return res.json({ status: true, data: order });
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ status: false, message: err.message });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+      status: false
+    })
+
+  }
+}
+
+export const all_food_restaurant = async (req, res) => {
+  try {
+    const { id } = req.params
+    const { id: userId } = req.user
+    const response = await FoodModel.find({ restaurantId: id }).populate("restaurantId");
+    res.status(200).json({
+      message: "Fetch all foods item",
+      status: true,
+      data: response,
+      userId: userId
+    })
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+      status: false
+    })
+  }
+}
+
+export const confirm_order = async (req, res) => {
+  try {
+    const body = req.body;
+    const userID = req.user.id;
+
+    if (!body || body.length === 0) {
+      return res.status(400).json({ message: "No items in order" });
+    }
+
+    // ✅ Collect items
+    const items = body.map((item) => ({
+      foodId: item._id,
+      name: item.name,
+      price: Number(item.price),
+      quantity: item.quantity,
+    }));
+
+    // ✅ Calculate total
+    const totalAmount = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+    // ✅ RestaurantId (assuming all items from same restaurant)
+    const restaurantId = body[0].restaurantId._id;
+
+    // ✅ Final payload
+    const payload = {
+      customerId: userID,
+      restaurantId,
+      items,
+      totalAmount,
+      paymentMethod: "cash_on_delivery",
+    };
+    // ✅ Save in DB
+    const order = await OrderModel.create(payload);
+
+    res.status(201).json({
+      message: "Order created successfully",
+      status: true,
+      order,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Something went wrong", error });
   }
 };
 
-/**
- * PATCH /api/orders/:id
- * Body: { status }
- * Should validate that only vendor/admin can update etc.
- */
-export const updateOrderStatus = async (req, res) => {
+
+export const fetch_order_user = async (req, res) => {
   try {
-    const io = req.app.get("io");
-    const { id } = req.params;
-    const { status } = req.body;
-    const order = await ordersSchema.findByIdAndUpdate(id, { status }, { new: true });
-
-    if (!order) return res.status(404).json({ status: false, message: "Order not found" });
-
-    // notify customer and order room
-    if (order.customerId) io.to(`user:${order.customerId}`).emit("order:update", order);
-    io.to(`order:${order._id}`).emit("order:update", order);
-    io.to(`vendor:${order.restaurantId}`).emit("order:updatedOnVendor", order);
-
-    return res.json({ status: true, data: order });
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ status: false, message: err.message });
+const userId = req.user.id
+console.log(userId , "userId")
+const orders = await OrderModel.find({customerId :userId})
+console.log(orders)
+    res.status(201).json({
+      message: "Order fetched successfully",
+      status: true,
+      data :orders
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Something went wrong", error });
   }
-};
-
-export const getOrders = async (req,res) => {
-  try {
-    const { vendorId, customerId } = req.query;
-    const query = {};
-    if (vendorId) query.restaurantId = vendorId;
-    if (customerId) query.customerId = customerId;
-    const orders = await ordersSchema.find(query).sort({ createdAt: -1 });
-    return res.json({ status: true, data: orders });
-  } catch (err) {
-    return res.status(500).json({ status: false, message: err.message });
-  }
-};
+}
