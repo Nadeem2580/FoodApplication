@@ -12,6 +12,7 @@ const ConfirmOrdder = ({ orderId }) => {   // 🔹 orderId props se ya API respo
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [currentStatus, setCurrentStatus] = useState(null)
+    console.log(currentStatus, "currentStatus")
     useEffect(() => {
         const socket = io("http://localhost:5000", { withCredentials: true });
         socket.on("connect", () => {
@@ -53,7 +54,7 @@ const ConfirmOrdder = ({ orderId }) => {   // 🔹 orderId props se ya API respo
                 {/* ✅ Live Order Status */}
                 <Box sx={{ mb: 3, p: 2, borderRadius: "10px", bgcolor: "#e0f2fe" }}>
                     <Typography variant="subtitle1" sx={{ fontWeight: "bold", color: "#0369a1" }}>
-                        Current Status: {currentStatus.status}
+                        Current Status: {currentStatus?.status == null ? "Pending" : currentStatus?.status}
                     </Typography>
                 </Box>
 
@@ -61,11 +62,11 @@ const ConfirmOrdder = ({ orderId }) => {   // 🔹 orderId props se ya API respo
                 <Box sx={{ textAlign: "left", mb: 2 }}>
                     <Typography variant="subtitle1" sx={{ fontWeight: "bold", mb: 1 }}>Order Summary</Typography>
 
-                    {items.map((item, index) => (
+                    {items?.map((item, index) => (
                         <Box key={index} sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1 }}>
-                            <Box component="img" src={item.imageUrl} alt={item.name} sx={{ width: 90, height: 60, borderRadius: 2, mr: 2 }} />
-                            <Typography>{item.name} x {item.quantity}</Typography>
-                            <Typography>Rs. {item.price}</Typography>
+                            <Box component="img" src={item?.imageUrl} alt={item?.name} sx={{ width: 90, height: 60, borderRadius: 2, mr: 2 }} />
+                            <Typography>{item?.name} x {item.quantity}</Typography>
+                            <Typography>Rs. {item?.price}</Typography>
                         </Box>
                     ))}
 
@@ -73,7 +74,7 @@ const ConfirmOrdder = ({ orderId }) => {   // 🔹 orderId props se ya API respo
 
                     <Box sx={{ display: "flex", justifyContent: "space-between", fontWeight: "bold" }}>
                         <Typography>Total Amount</Typography>
-                        <Typography>Rs. {items.reduce((acc, item) => acc + item.price * item.quantity, 0)}</Typography>
+                        <Typography>Rs. {items?.reduce((acc, item) => acc + item?.price * item?.quantity, 0)}</Typography>
                     </Box>
                 </Box>
 
@@ -87,11 +88,11 @@ const ConfirmOrdder = ({ orderId }) => {   // 🔹 orderId props se ya API respo
 
                 {/* Buttons */}
                 <Box sx={{ display: "flex", justifyContent: "center", gap: 2, mt: 3 }}>
-                    {currentStatus.status === "rejected" ? <Button variant="outlined" color="error" onClick={() => {
+                    {currentStatus?.status === "rejected" ? <Button variant="outlined" color="error" onClick={() => {
                         dispatch(clearCart());
                         navigate("/user-dashboard", { replace: true });
                     }}>Back to Home</Button>
-                        : currentStatus.status === "delivered" ? <Button variant="outlined" color="success" onClick={() => {
+                        : currentStatus?.status === "delivered" ? <Button variant="outlined" color="success" onClick={() => {
                             dispatch(clearCart());
                             navigate("/user-dashboard", { replace: true });
                         }}>Back to Home</Button> : null}
