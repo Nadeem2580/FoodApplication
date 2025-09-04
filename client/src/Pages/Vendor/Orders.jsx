@@ -18,8 +18,8 @@ const Orders = () => {
   
   
   
+  const socket = io("http://localhost:5000", { withCredentials: true });
   useEffect(() => {
-    const socket = io("http://localhost:5000", { withCredentials: true });
     socket.on("connect", () => {
     });
 

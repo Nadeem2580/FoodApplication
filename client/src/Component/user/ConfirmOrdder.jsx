@@ -12,9 +12,8 @@ const ConfirmOrdder = ({ orderId }) => {   // 🔹 orderId props se ya API respo
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [currentStatus, setCurrentStatus] = useState(null)
-    console.log(currentStatus, "currentStatus")
+    const socket = io("http://localhost:5000", { withCredentials: true });
     useEffect(() => {
-        const socket = io("http://localhost:5000", { withCredentials: true });
         socket.on("connect", () => {
         });
 
