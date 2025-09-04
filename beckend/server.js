@@ -19,7 +19,7 @@ const server = http.createServer(app);
 app.use(cors())
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:5173", "http://localhost:5000"],
+    origin: ["http://localhost:5173", "http://localhost:5000","https://food-application-a7ey.vercel.app"],
     credentials: true,
   },
 });
