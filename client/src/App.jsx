@@ -20,7 +20,6 @@ import AdminVendor from './Pages/Admin/AdminVendor'
 import LoginPage from './Pages/Auth/Login'
 import SignUp from './Pages/Auth/SignUp'
 import UserOrder from './Pages/Client/Orders'
-import UserDashboard from './Pages/Client/userDashboard'
 import Home from './Pages/Home/Home'
 import AdminRoute from './Pages/Routes/AdminRoute'
 import AuthRoute from './Pages/Routes/AuthRoute'
@@ -31,6 +30,8 @@ import Orders from './Pages/Vendor/Orders'
 import RestaurantPage from './Pages/Vendor/Restaurant'
 import VendorDahsboard from './Pages/Vendor/VendorDahsboard'
 import { setRole, setToken } from './ReduxSlices/slices'
+import UserDashboard from "./Pages/Client/UserDashboard.jsx"
+
 
 function App() {
 
