@@ -1,6 +1,6 @@
 import { Container, Grid } from '@mui/material'
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import Loading from '../../../Loader/Loading'
 import api from '../../Pages/Utils/axiosConfig'
 import toastAlert from '../../Pages/Utils/utils'
@@ -10,7 +10,9 @@ const AllFoods = () => {
     const [foodItem, setFoodItem] = useState([])
     const [userId, setUserID] = useState([])
     const { id } = useParams()
-
+    const location = useLocation()
+    const path = location.pathname.slice(0, 14)
+    console.log(path, "path")
     useEffect(() => {
         allFood()
     }, [])
@@ -18,10 +20,22 @@ const AllFoods = () => {
 
     const allFood = async () => {
         try {
-            const res = await api.get(`/api/orders/all-foods/${id}`)
-            setFoodItem(res.data.data)
-            const userId = res.data.userId 
-            setUserID(userId)
+            if (path == "/all-home-food") {
+                const res = await api.get(`/api/orders/all-home-foods/${id}`)
+                setFoodItem(res.data.data)
+                // const userId = res.data.userId
+                // setUserID(userId)
+
+            } else {
+                console.log("other")
+                const res = await api.get(`/api/orders/all-foods/${id}`)
+                setFoodItem(res.data.data)
+                const userId = res.data.userId
+                setUserID(userId)
+            }
+
+
+
         } catch (error) {
             console.log(error.response.data.message)
             toastAlert({
@@ -47,8 +61,8 @@ const AllFoods = () => {
                             </Grid> :
                             (
                                 foodItem.map((food, index) => (
-                                    <Grid key={index} size={{xs:12 , md:6 , lg:4 ,xl:3}}>
-                                        <OderFoodCard  food={food} userId={userId}/>
+                                    <Grid key={index} size={{ xs: 12, md: 6, lg: 4, xl: 3 }}>
+                                        <OderFoodCard food={food} userId={userId} />
 
                                     </Grid>
                                 ))

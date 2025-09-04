@@ -19,12 +19,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import saylaniPapa from "../../assets/saylaniPapa.png";
 import axios from "../../Pages/Utils/axiosConfig";
-import { setRole } from '../../ReduxSlices/slices';
+import { setIsRefresh, setRole } from '../../ReduxSlices/slices';
 import CartSideBar from './CartSideBar';
 
 
 function UserNavbar() {
-    const { items } = useSelector((store) => store.cart)
+    const { items, isRefresh } = useSelector((store) => store.cart)
     const totalQuantity = items.reduce((acc, item) => acc + item.quantity, 0);
     const token = Cookie.get("token")
     const [open, setOpen] = React.useState(false);
@@ -69,6 +69,7 @@ function UserNavbar() {
         Cookie.set(null)
         axios.defaults.baseURL = ""
         dispatch(setRole(null))
+        dispatch(setIsRefresh(!isRefresh))
         navigate("/")
     }
     const ButtonswithBascket = () => {

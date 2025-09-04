@@ -14,7 +14,6 @@ const OderFoodCard = ({ food }) => {
 
     }
 
-    console.log(food, "food")
     return (
         <Card sx={{ maxWidth: 345, borderRadius: 3, boxShadow: 3 }}>
             {/* Food Image */}

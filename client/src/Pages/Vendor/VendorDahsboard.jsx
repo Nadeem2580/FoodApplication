@@ -226,11 +226,7 @@ const VendorDahsboard = () => {
                 </Grid>
             </Container>
 
-            <Box>
-                <input type="text" placeholder='enter message' onChange={(e) => setVal(e.target.value)} />
-                <button onClick={check}>Send</button>
-
-            </Box>
+    
 
 
 

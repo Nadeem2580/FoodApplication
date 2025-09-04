@@ -58,6 +58,7 @@ function App() {
   return (
     <>
       <Routes>
+        <Route path='/all-home-foods/:id' element={<AllFoods />} />
 
         <Route element={<AuthRoute />}>
           <Route index element={<Home />} />
@@ -85,10 +86,10 @@ function App() {
           <Route path='/user-dashboard' element={<UserDashboard />} />
           <Route path='/all-foods/:id' element={<AllFoods />} />
           <Route path='/all-user-orders' element={<UserOrder />} />
-        
+
         </Route>
-        
-        
+
+
         <Route element={<ClientRoute />}>
           <Route path='/confirm-orders' element={<ConfirmOrdder />} />
 

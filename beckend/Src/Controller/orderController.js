@@ -22,6 +22,26 @@ export const fetch_restaurant = async (req, res) => {
   }
 }
 
+export const all_food_home_restaurant = async (req, res) => {
+  try {
+    const { id } = req.params
+    const response = await FoodModel.find({ restaurantId: id }).populate("restaurantId");
+    res.status(200).json({
+      message: "Fetch all foods item",
+      status: true,
+      data: response
+    })
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+      status: false
+    })
+  }
+
+}
+
+
+
 export const all_food_restaurant = async (req, res) => {
   try {
     const { id } = req.params
@@ -90,9 +110,7 @@ export const confirm_order = async (req, res) => {
 export const fetch_order_user = async (req, res) => {
   try {
 const userId = req.user.id
-console.log(userId , "userId")
 const orders = await OrderModel.find({customerId :userId})
-console.log(orders)
     res.status(201).json({
       message: "Order fetched successfully",
       status: true,
