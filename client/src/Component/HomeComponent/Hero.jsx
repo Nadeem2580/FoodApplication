@@ -39,7 +39,8 @@ const Hero = () => {
       <motion.div
         variants={containerVariant}
         initial="hidden"
-        animate="show"
+        whileInView="show"        // 👈 animate only when in view
+        viewport={{ once: false, amount: 0.5 }} // once = animate only 1st time | amount=kitna visible ho
         style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px" }}
       >
         {/* Heading 1 */}

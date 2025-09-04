@@ -1,60 +1,63 @@
 import React from "react";
-import { Card, CardContent, CardMedia, Typography, Button, Box } from "@mui/material";
+import { CardContent, CardMedia, Typography, Button, Box } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../ReduxSlices/AddToCart";
+import { motion } from "framer-motion";
+
+const MotionCard = motion.div; // 👈 wrapper banaya hover + animation ke liye
 
 const OderFoodCard = ({ food }) => {
-    const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-    const addTOCart = (food) => {
+  const addTOCart = (food) => {
+    dispatch(addToCart(food));
+  };
 
+  return (
+    <MotionCard
+      initial={{ opacity: 0, y: 50 }} // 👈 entry animation
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, type: "spring" }}
+      viewport={{ once: true, amount: 0.2 }}
+      whileHover={{ scale: 1.05, boxShadow: "0 8px 24px rgba(0,0,0,0.25)" }} // 👈 hover effect
+      style={{ borderRadius: "12px" }}
+    >
+      <CardMedia
+        component="img"
+        height="200"
+        image={food.imageUrl}
+        alt={food.name}
+        style={{ borderTopLeftRadius: "12px", borderTopRightRadius: "12px", objectFit: "cover" }}
+      />
 
-        dispatch(addToCart(food))
+      <CardContent>
+        <Typography gutterBottom variant="h6" component="div" fontWeight="bold">
+          {food.name}
+        </Typography>
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+          {food.description.length > 80 ? food.description.slice(0, 80) + "..." : food.description}
+        </Typography>
+        <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
+          <Typography variant="body1" color="primary" fontWeight="bold">
+            Rs. {food.price}
+          </Typography>
+          <Typography variant="caption" color="text.secondary">
+            {food.category}
+          </Typography>
+        </Box>
 
-
-    }
-
-    return (
-        <Card sx={{ maxWidth: 345, borderRadius: 3, boxShadow: 3 }}>
-            {/* Food Image */}
-            <CardMedia
-                component="img"
-                height="200"
-                image={food.imageUrl}
-                alt={food.name}
-                sx={{ objectFit: "cover" }}
-            />
-
-            {/* Food Details */}
-            <CardContent>
-                <Typography gutterBottom variant="h6" component="div" fontWeight="bold">
-                    {food.name}
-                </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-                    {food.description.length > 80 ? food.description.slice(0, 80) + "..." : food.description}
-                </Typography>
-                <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
-                    <Typography variant="body1" color="primary" fontWeight="bold">
-                        Rs. {food.price}
-                    </Typography>
-                    <Typography variant="caption" color="text.secondary">
-                        {food.category}
-                    </Typography>
-                </Box>
-
-                {/* Order Button */}
-                <Button
-                    variant="contained"
-                    color="secondary"
-                    fullWidth
-                    onClick={() => addTOCart(food)}
-                    sx={{ borderRadius: 2, fontWeight: "700" }}
-                >
-                    Add to Cart
-                </Button>
-            </CardContent>
-        </Card>
-    );
+        <Button
+          variant="contained"
+          color="secondary"
+          fullWidth
+          onClick={() => addTOCart(food)}
+          sx={{ borderRadius: 2, fontWeight: "700" }}
+        >
+          Add to Cart
+        </Button>
+      </CardContent>
+    </MotionCard>
+  );
 };
 
 export default OderFoodCard;

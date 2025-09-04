@@ -87,7 +87,7 @@ function Navbar() {
 
               {/* Logout */}
               <motion.div variants={buttonItem}>
-                <Button onClick={logoutFunc} variant='contained' sx={{ display: "flex", alignItems: "center", gap: "5px", fontSize: "10px", fontWeight: 700 }}>
+                <Button onClick={logoutFunc} variant='contained' sx={{ display: "flex", alignItems: "center", gap: "5px", fontSize: "10px", fontWeight: 700,padding:"13px 20px" }}>
                   Log out <LogoutIcon sx={{ fontSize: "12px", color: "#fff" }} />
                 </Button>
               </motion.div>

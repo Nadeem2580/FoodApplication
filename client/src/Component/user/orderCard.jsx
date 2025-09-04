@@ -1,15 +1,25 @@
 import React from "react";
 import { Card, CardContent, CardMedia, Typography } from "@mui/material";
+import { motion } from "framer-motion";
+
+const MotionCard = motion(Card); // 👈 MUI Card ko motion component banaya
 
 const OrderCard = ({ restaurant }) => {
   return (
-    <Card sx={{ maxWidth: 345, borderRadius: "16px", boxShadow: 3 }}>
+    <MotionCard
+      sx={{ maxWidth: 345, borderRadius: "16px", boxShadow: 3 }}
+      initial={{ opacity: 0, y: 100 }}                 // 👈 start position
+      whileInView={{ opacity: 1, y: 0 }}              // 👈 animate on scroll
+      transition={{ duration: 0.6, ease: "easeOut" }} // 👈 smooth effect
+      viewport={{ once: false, amount: 0.3 }}         // 👈 scroll trigger
+      whileHover={{ scale: 1.05 }}                    // 👈 hover zoom
+    >
       {/* Image */}
       <CardMedia
         component="img"
         height="200"
-        image={restaurant?.imageUrl || null } // fallback image
-        alt={restaurant.restaurantName}
+        image={restaurant?.imageUrl || "https://via.placeholder.com/300x200"}
+        alt={restaurant?.restaurantName}
       />
 
       {/* Name + Category */}
@@ -21,10 +31,10 @@ const OrderCard = ({ restaurant }) => {
           {restaurant?.category}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {restaurant?.address.slice(0, 80)+"..."}
+          {restaurant?.address?.slice(0, 80) + "..."}
         </Typography>
       </CardContent>
-    </Card>
+    </MotionCard>
   );
 };
 

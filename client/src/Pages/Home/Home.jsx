@@ -55,9 +55,7 @@ const Home = () => {
   return (
     <>
       <Navbar />
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8 }}>
         <Hero />
-      </motion.div>
 
       <motion.div initial={{ scale: 0.5, opacity: 0 }} whileInView={{ scale: 1, opacity: 1 }} transition={{ duration: 1 }}>
         <Heading />
@@ -99,17 +97,15 @@ const Home = () => {
         <SpecialOffer />
       </motion.div>
 
-      <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
+      
         <OfferCard />
-      </motion.div>
+
 
       <motion.div initial={{ scale: 0.5, opacity: 0 }} whileInView={{ scale: 1, opacity: 1 }} transition={{ duration: 1 }}>
         <JoiningHeading />
       </motion.div>
 
-      <motion.div initial={{ x: -50, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} transition={{ duration: 0.7 }}>
         <VendorClientCard />
-      </motion.div>
 
       <Footer />
     </>

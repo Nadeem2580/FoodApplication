@@ -47,7 +47,6 @@ export const all_restaurant = async (req, res) => {
     try {
 
         const getRestaurant = await RestaurantModel.find({ approvedStatus: "approved" })
-        console.log(getRestaurant)
         res.status(200).json({
             message: "Fetch all restaurants successfully",
             status: true,
