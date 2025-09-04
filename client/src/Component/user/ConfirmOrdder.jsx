@@ -19,6 +19,7 @@ const ConfirmOrdder = ({ orderId }) => {   // 🔹 orderId props se ya API respo
 
         // Listen for order status update
         socket.on("order_status_updated", (updatedOrder) => {
+            console.log(updatedOrder.status , "updatedOrder.status")
             setCurrentStatus(updatedOrder)
             // Sirf current order ka status update karein
             if (updatedOrder._id === orderId) {

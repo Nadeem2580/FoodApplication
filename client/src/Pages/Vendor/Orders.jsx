@@ -25,9 +25,9 @@ const Orders = () => {
 
     // Listen for order status update (backend se aayega)
     socket.on("order_status_updated", (updatedOrder) => {
-
+console.log(updatedOrder , "updatedOrder")
       // Agar orders ka state maintain karte ho, to yahan update karna
-      // setOrders(prev => prev.map(o => o._id === updatedOrder._id ? updatedOrder : o));
+      setOrder(prev => prev.map(o => o._id === updatedOrder._id ? updatedOrder : o));
     });
 
     // Listen for message example
