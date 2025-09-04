@@ -9,23 +9,23 @@ import Loading from '../../../Loader/Loading';
 import { setIsRefresh } from '../../ReduxSlices/slices';
 const Orders = () => {
   const [orders, setOrder] = useState([])
+  const [socket, setSocket] = useState(null);
   const { isRefresh } = useSelector((store) => store.Counter)
   const dispatch = useDispatch()
   const statusOptions = ["pending", "accepted", "preparing", "on_the_way", "delivered", "rejected"];
   useEffect(() => {
     fetchOrder()
   }, [isRefresh])
-
-
-
+  
+  
+  
   useEffect(() => {
-    const socket = io("http://localhost:5000", { withCredentials: true });
-    socket.on("connect", () => {
-    });
+    const newSocket = io("http://localhost:5000", { withCredentials: true });
+  setSocket(newSocket);
 
-    // Listen for order status update (backend se aayega)
-    socket.on("order_status_updated", (updatedOrder) => {
-      console.log(updatedOrder, "updatedOrder")
+  // Listen for order status update (backend se aayega)
+  socket.on("order_status_updated", (updatedOrder) => {
+    
       // Agar orders ka state maintain karte ho, to yahan update karna
       setOrder(prev => prev.map(o => o._id === updatedOrder._id ? updatedOrder : o));
     });
@@ -38,6 +38,9 @@ const Orders = () => {
       socket.off("connect");
       socket.off("order_status_updated");
       socket.off("message");
+    };
+    return () => {
+      newSocket.disconnect(); // cleanup
     };
   }, []);
 
@@ -59,22 +62,20 @@ const Orders = () => {
   const orderStatus = async (id, status) => {
     try {
       const orders = await api.patch(`/api/vendor/order/${id}`, { status });
-      dispatch(setIsRefresh(!isRefresh));
-
-      // ✅ Backend ko event bhejna with updated order
-      socket.emit("update_order_status", orders.data.data);
-
+      dispatch(setIsRefresh(!isRefresh))
+      socket.emit("message", { text: status, sender: "vendor" });
       toastAlert({
         message: "status updated",
         type: "success"
-      });
+      })
+
     } catch (error) {
       toastAlert({
         message: error.message || "Something went wrong",
         type: "error"
-      });
+      })
     }
-  };
+  }
 
 
   return (
@@ -82,104 +83,104 @@ const Orders = () => {
       <Loading />
     ) : (
       orders.map((order, index) => (
-        <Container maxWidth="lg">
-          <Grid container spacing={2}>
-            <Grid size={{ xs: 12, md: 6, lg: 4, xl: 3 }}>
-              <Card
-                key={index}
-                sx={{
-                  maxWidth: 400,
-                  // m: "16px 0",
-                  borderRadius: 2,
-                  boxShadow: 3,
-                  bgcolor: "#fafafa",
-                  transition: "transform 0.2s ease",
-                  "&:hover": { transform: "scale(1.03)", boxShadow: 6 },
-                }}
-              >
-                <CardContent sx={{ py: 1.5, px: 2 }}>
-                  {/* Header */}
-                  <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
-                    <Typography variant="subtitle1" fontWeight="600" color="text.primary">
-                      Order #{order?._id.slice(-6).toUpperCase()}
-                    </Typography>
-                    <FormControl size="small" sx={{ minWidth: 130 }}>
-                      <InputLabel>Status</InputLabel>
-                      <Select
-                        value={order.status}
-                        label="Status"
-                        onChange={(e) => orderStatus(order._id, e.target.value)}
-                        sx={{ textTransform: "capitalize" }}
-                        size="small"
-                      >
-                        {statusOptions.map((status) => (
-                          <MenuItem
-                            key={status}
-                            value={status}
-                            sx={{ textTransform: "capitalize" }}
-                          >
-                            {status.replace(/_/g, " ")}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </Box>
-
-                  <Divider />
-
-                  {/* Order Items */}
-                  <Typography variant="subtitle2" fontWeight="600" mt={1} mb={0.5}>
-                    Items:
+       <Container maxWidth="lg">
+         <Grid container spacing={2}>
+          <Grid size={{ xs: 12, md: 6, lg: 4, xl: 3 }}>
+            <Card
+              key={index}
+              sx={{
+                maxWidth: 400,
+                // m: "16px 0",
+                borderRadius: 2,
+                boxShadow: 3,
+                bgcolor: "#fafafa",
+                transition: "transform 0.2s ease",
+                "&:hover": { transform: "scale(1.03)", boxShadow: 6 },
+              }}
+            >
+              <CardContent sx={{ py: 1.5, px: 2 }}>
+                {/* Header */}
+                <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
+                  <Typography variant="subtitle1" fontWeight="600" color="text.primary">
+                    Order #{order?._id.slice(-6).toUpperCase()}
                   </Typography>
-                  <List dense disablePadding sx={{ maxHeight: 120, overflowY: "auto" }}>
-                    {order.items.map((item) => (
-                      <ListItem key={item._id} sx={{ px: 0 }}>
-                        <ListItemText
-                          primary={`${item.name} (x${item.quantity})`}
-                          primaryTypographyProps={{ fontSize: 13 }}
-                          secondary={`Price: Rs. ${item.price}`}
-                          secondaryTypographyProps={{ fontSize: 11, color: "text.secondary" }}
-                        />
-                        <Typography
-                          fontWeight="600"
-                          fontSize={13}
-                          color="primary.main"
-                          sx={{ minWidth: 55, textAlign: "right" }}
-                        >
-                          Rs.{item.price * item.quantity}
-                        </Typography>
-                      </ListItem>
-                    ))}
-                  </List>
-
-                  <Divider sx={{ my: 1 }} />
-
-                  {/* Summary */}
-                  <Box display="flex" justifyContent="space-between" mb={0.7}>
-                    <Typography variant="body2" fontWeight="600" color="text.primary">
-                      Payment:
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      sx={{ textTransform: "capitalize", color: "text.secondary" }}
+                  <FormControl size="small" sx={{ minWidth: 130 }}>
+                    <InputLabel>Status</InputLabel>
+                    <Select
+                      value={order.status}
+                      label="Status"
+                      onChange={(e) => orderStatus(order._id, e.target.value)}
+                      sx={{ textTransform: "capitalize" }}
+                      size="small"
                     >
-                      {order.paymentMethod.replace(/_/g, " ")}
-                    </Typography>
-                  </Box>
+                      {statusOptions.map((status) => (
+                        <MenuItem
+                          key={status}
+                          value={status}
+                          sx={{ textTransform: "capitalize" }}
+                        >
+                          {status.replace(/_/g, " ")}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Box>
 
-                  <Box display="flex" justifyContent="space-between" alignItems="center">
-                    <Typography variant="body2" fontWeight="600" color="text.primary">
-                      Total:
-                    </Typography>
-                    <Typography variant="subtitle1" fontWeight="700" color="primary.main">
-                      Rs.{order.totalAmount}
-                    </Typography>
-                  </Box>
-                </CardContent>
-              </Card>
-            </Grid>
+                <Divider />
+
+                {/* Order Items */}
+                <Typography variant="subtitle2" fontWeight="600" mt={1} mb={0.5}>
+                  Items:
+                </Typography>
+                <List dense disablePadding sx={{ maxHeight: 120, overflowY: "auto" }}>
+                  {order.items.map((item) => (
+                    <ListItem key={item._id} sx={{ px: 0 }}>
+                      <ListItemText
+                        primary={`${item.name} (x${item.quantity})`}
+                        primaryTypographyProps={{ fontSize: 13 }}
+                        secondary={`Price: Rs. ${item.price}`}
+                        secondaryTypographyProps={{ fontSize: 11, color: "text.secondary" }}
+                      />
+                      <Typography
+                        fontWeight="600"
+                        fontSize={13}
+                        color="primary.main"
+                        sx={{ minWidth: 55, textAlign: "right" }}
+                      >
+                        Rs.{item.price * item.quantity}
+                      </Typography>
+                    </ListItem>
+                  ))}
+                </List>
+
+                <Divider sx={{ my: 1 }} />
+
+                {/* Summary */}
+                <Box display="flex" justifyContent="space-between" mb={0.7}>
+                  <Typography variant="body2" fontWeight="600" color="text.primary">
+                    Payment:
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{ textTransform: "capitalize", color: "text.secondary" }}
+                  >
+                    {order.paymentMethod.replace(/_/g, " ")}
+                  </Typography>
+                </Box>
+
+                <Box display="flex" justifyContent="space-between" alignItems="center">
+                  <Typography variant="body2" fontWeight="600" color="text.primary">
+                    Total:
+                  </Typography>
+                  <Typography variant="subtitle1" fontWeight="700" color="primary.main">
+                    Rs.{order.totalAmount}
+                  </Typography>
+                </Box>
+              </CardContent>
+            </Card>
           </Grid>
-        </Container>
+        </Grid>
+       </Container>
       ))
     )
   );
