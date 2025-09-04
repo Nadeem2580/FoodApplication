@@ -43,14 +43,15 @@ app.use("/", (req, res) => res.send("Server Up"))
 
 // Socket connection
 app.set("io", io);
-
 io.on("connection", (socket) => {
+  console.log("User connected:", socket.id);
 
-  // Example socket event
-  socket.on("message", (data) => {
-    io.emit("message", data) // broadcast to all clients
-  })
-})
+  // Vendor status update ka event
+  socket.on("update_order_status", (updatedOrder) => {
+    // ✅ Ab sare connected clients (vendor + customer) ko bhej do
+    io.emit("order_status_updated", updatedOrder);
+  });
+});
 
 // Server running
 server.listen(PORT, () => {
