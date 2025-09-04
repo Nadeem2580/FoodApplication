@@ -13,13 +13,11 @@ import VendorLayout from './Component/vendor/Layout/Layout'
 import AdminDashboard from "./Pages/Admin/AdminDashboard"
 import LoginPage from './Pages/Auth/Login'
 import SignUp from './Pages/Auth/SignUp'
-import UserDashboard from './Pages/Client/userDashboard'
 import Home from './Pages/Home/Home'
 import AdminRoute from './Pages/Routes/AdminRoute'
 import AuthRoute from './Pages/Routes/AuthRoute'
 import ClientRoute from './Pages/Routes/ClientRoute'
 import VendorRoute from './Pages/Routes/VendorRoute'
-import api from './Pages/Utils/axiosConfig'
 import VendorDahsboard from './Pages/Vendor/VendorDahsboard'
 import { setRole, setToken } from './ReduxSlices/slices'
 import Foods from './Pages/Vendor/Foods'
@@ -33,6 +31,7 @@ import UserNavbar from './Component/user/UserNavbar'
 import AllFoods from './Component/user/AllFoods'
 import ConfirmOrdder from './Component/user/ConfirmOrdder'
 import UserOrder from './Pages/Client/Orders'
+import UserDashboard from './Pages/Client/userDashboard'
 
 function App() {
 
