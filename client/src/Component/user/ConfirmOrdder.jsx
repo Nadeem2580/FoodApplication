@@ -5,15 +5,16 @@ import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import orderImage from "../../assets/order.gif";
 import { clearCart } from "../../ReduxSlices/AddToCart";
+import { setIsRefresh } from "../../ReduxSlices/slices";
 
 const ConfirmOrdder = ({ orderId }) => {   // 🔹 orderId props se ya API response se lena hoga
-    const { items } = useSelector((store) => store.cart);
+    const { items, isRefresh } = useSelector((store) => store.cart);
     const [orderStatus, setOrderStatus] = useState("pending"); // 🔹 default pending
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [currentStatus, setCurrentStatus] = useState(null)
-    const socket = io("http://localhost:5000", { withCredentials: true });
     useEffect(() => {
+        const socket = io("http://localhost:5000", { withCredentials: true });
         socket.on("connect", () => {
         });
 
@@ -22,6 +23,9 @@ const ConfirmOrdder = ({ orderId }) => {   // 🔹 orderId props se ya API respo
             if (updatedOrder._id === orderId) {
                 setOrderStatus(updatedOrder.status);
                 setCurrentStatus(updatedOrder);
+                dispatch(setIsRefresh(!isRefresh))
+                console.log(currentStatus)
+
             }
         });
 
@@ -30,7 +34,6 @@ const ConfirmOrdder = ({ orderId }) => {   // 🔹 orderId props se ya API respo
             socket.off("order_status_updated");
         };
     }, [orderId]);
-
     return (
         <Box sx={{ minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center", bgcolor: "#f9fafb", p: 2 }}>
             <Paper elevation={6} sx={{ width: { xs: "100%", sm: "90%", md: "70%", lg: "50%", xl: "40%" }, p: 3, borderRadius: "16px", textAlign: "center" }}>
