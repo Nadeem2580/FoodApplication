@@ -6,9 +6,9 @@ import Button from "@mui/material/Button";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { addToCart, clearCart, decreaseQuantity, removeFromCart } from "../../ReduxSlices/AddToCart";
 import api from "../../Pages/Utils/axiosConfig";
 import toastAlert from "../../Pages/Utils/utils";
+import { addToCart, clearCart, decreaseQuantity, removeFromCart } from "../../ReduxSlices/AddToCart";
 
 
 export default function CartSideBar({ open, setOpen }) {

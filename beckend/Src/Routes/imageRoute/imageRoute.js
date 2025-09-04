@@ -1,7 +1,7 @@
 
 import express from "express"
-import authMiddleware from "../../Middleware/authMiddleware.js"
 import { image_contoller } from "../../Controller/imageController.js"
+import authMiddleware from "../../Middleware/authMiddleware.js"
 import upload from "../../Middleware/multer.js"
 
 

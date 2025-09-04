@@ -1,13 +1,12 @@
-import React from 'react'
-import { Card, Typography, Box, Button, Container, Grid } from "@mui/material";
-import logo from "../../assets/saylaniPapa.png"
+import EmailIcon from "@mui/icons-material/Email";
 import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
-import TwitterIcon from "@mui/icons-material/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import PhoneIcon from "@mui/icons-material/Phone";
-import EmailIcon from "@mui/icons-material/Email";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import PhoneIcon from "@mui/icons-material/Phone";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import { Box, Button, Container, Grid, Typography } from "@mui/material";
+import logo from "../../assets/saylaniPapa.png";
 const Footer = () => {
   return (
     <Box sx={{ marginTop: "100px", background: "linear-gradient( #aee64eff, #e2ebfaff)", padding: "70px 30px" }}>

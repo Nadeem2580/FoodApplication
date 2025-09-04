@@ -1,10 +1,10 @@
-import { Box, Typography, Divider, Button, Paper } from "@mui/material";
-import React, { useEffect, useState } from 'react'
-import orderImage from "../../assets/order.gif";
+import { Box, Button, Divider, Paper, Typography } from "@mui/material";
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { clearCart } from "../../ReduxSlices/AddToCart";
 import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
+import orderImage from "../../assets/order.gif";
+import { clearCart } from "../../ReduxSlices/AddToCart";
 
 const ConfirmOrdder = ({ orderId }) => {   // 🔹 orderId props se ya API response se lena hoga
     const { items } = useSelector((store) => store.cart);

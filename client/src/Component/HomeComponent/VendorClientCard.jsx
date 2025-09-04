@@ -1,8 +1,7 @@
-import { Box, Button, Container, Grid, Stack, Typography } from '@mui/material'
-import React from 'react'
-import vendor from "../../assets/vendor.png"
-import client from "../../assets/client.png"
+import { Box, Container, Grid, Stack, Typography } from '@mui/material'
 import { motion } from "framer-motion"
+import client from "../../assets/client.png"
+import vendor from "../../assets/vendor.png"
 
 const VendorClientCard = () => {
   return (

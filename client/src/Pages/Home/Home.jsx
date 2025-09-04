@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from 'react'
 import { Container, Grid } from '@mui/material'
+import { motion } from "framer-motion"
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import Navbar from '../../Component/HomeComponent/Navbar'
-import Hero from '../../Component/HomeComponent/Hero'
-import Heading from '../../Component/HomeComponent/Heading'
+import Loading from '../../../Loader/Loading'
 import CardSlider from '../../Component/HomeComponent/CardSlider'
 import FeatureHeading from '../../Component/HomeComponent/FeatureHeading'
-import SpecialOffer from '../../Component/HomeComponent/SpecialOffer'
-import OfferCard from '../../Component/HomeComponent/OfferCard'
-import JoiningHeading from '../../Component/HomeComponent/JoiningHeading'
-import VendorClientCard from '../../Component/HomeComponent/VendorClientCard'
 import Footer from '../../Component/HomeComponent/Footer'
-import Loading from '../../../Loader/Loading'
+import Heading from '../../Component/HomeComponent/Heading'
+import Hero from '../../Component/HomeComponent/Hero'
+import JoiningHeading from '../../Component/HomeComponent/JoiningHeading'
+import Navbar from '../../Component/HomeComponent/Navbar'
+import OfferCard from '../../Component/HomeComponent/OfferCard'
+import SpecialOffer from '../../Component/HomeComponent/SpecialOffer'
+import VendorClientCard from '../../Component/HomeComponent/VendorClientCard'
 import OrderCard from '../../Component/user/orderCard'
-import toastAlert from '../Utils/utils'
 import api from '../Utils/axiosConfig'
-import { motion } from "framer-motion"
+import toastAlert from '../Utils/utils'
 
 const Home = () => {
   const [restaurant, setRestaurant] = useState([])

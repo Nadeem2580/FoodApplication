@@ -1,10 +1,11 @@
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
 import FlatwareIcon from '@mui/icons-material/Flatware';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
-import DashboardIcon from '@mui/icons-material/Dashboard';
+import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import { Button } from '@mui/material';
 import MuiAppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -24,7 +25,6 @@ import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { setRole } from '../../../ReduxSlices/slices';
-import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 const drawerWidth = 240;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(

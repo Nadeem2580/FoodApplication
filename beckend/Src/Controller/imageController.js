@@ -1,5 +1,5 @@
-import { cloudinaryConfig, cloudinaryUplaoder } from "../Config/cloudinary.js"
 import fs from "fs"
+import { cloudinaryUplaoder } from "../Config/cloudinary.js"
 
 export const image_contoller = async (req, res) => {
     try {

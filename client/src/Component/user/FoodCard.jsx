@@ -1,8 +1,7 @@
-import React from "react";
-import { CardContent, CardMedia, Typography, Button, Box } from "@mui/material";
+import { Box, Button, CardContent, CardMedia, Typography } from "@mui/material";
+import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../ReduxSlices/AddToCart";
-import { motion } from "framer-motion";
 
 const MotionCard = motion.div; // 👈 wrapper banaya hover + animation ke liye
 

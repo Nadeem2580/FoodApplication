@@ -16,13 +16,13 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import Cookie from "js-cookie";
 import { useState } from "react";
-import { Controller, set, useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
-import toastAlert from "../Utils/utils";
-import { useDispatch, useSelector } from "react-redux";
 import { setRole } from "../../ReduxSlices/slices";
 import api from "../Utils/axiosConfig";
+import toastAlert from "../Utils/utils";
 
 const LoginPage = () => {
     const navigate = useNavigate()

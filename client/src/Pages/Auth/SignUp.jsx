@@ -19,10 +19,10 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import * as yup from "yup";
-import toastAlert from "../Utils/utils";
 import api from "../Utils/axiosConfig";
+import toastAlert from "../Utils/utils";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);

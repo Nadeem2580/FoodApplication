@@ -1,10 +1,9 @@
 import { Delete, Edit } from '@mui/icons-material'
 import { Box, Button, Card, CardContent, CardMedia, IconButton, Tooltip, Typography } from '@mui/material'
-import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setAddFood, setEditFood, setIsRefresh, setSelectedFood } from '../../../ReduxSlices/slices'
-import toastAlert from '../../../Pages/Utils/utils'
 import api from '../../../Pages/Utils/axiosConfig'
+import toastAlert from '../../../Pages/Utils/utils'
+import { setEditFood, setIsRefresh, setSelectedFood } from '../../../ReduxSlices/slices'
 const FoodCard = ({ item }) => {
     const dispatch = useDispatch()
     const { isRefresh } = useSelector((store) => store.Counter)

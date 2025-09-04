@@ -70,6 +70,4 @@ const { setEditFood, addCount, setToken, setRole, setIsRefresh, setRestaurant, s
 
 const counterReducer = reducer
 
-export {
-    counterReducer, setEditFood, setToken, addCount, setRole, setIsRefresh, setRestaurant, setAddFood, setSelectedRestaurant, setCreateResModal, setSelectedFood
-}
+export { addCount, counterReducer, setAddFood, setCreateResModal, setEditFood, setIsRefresh, setRestaurant, setRole, setSelectedFood, setSelectedRestaurant, setToken };

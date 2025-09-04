@@ -1,6 +1,6 @@
-import userModel from "../Model/schema.js"
-import bcrypt, { genSalt } from "bcryptjs"
+import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
+import userModel from "../Model/schema.js"
 
 
 export const login_controller = async (req, res) => {

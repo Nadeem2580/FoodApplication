@@ -1,5 +1,5 @@
 import axios from "axios";
-import Cookie from "js-cookie"
+import Cookie from "js-cookie";
 
 
 const api = axios.create({

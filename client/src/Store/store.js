@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit"
-import { counterReducer } from "../ReduxSlices/slices"
-import { adminReducer } from "../ReduxSlices/adminSlices"
 import { addCart } from "../ReduxSlices/AddToCart"
+import { adminReducer } from "../ReduxSlices/adminSlices"
+import { counterReducer } from "../ReduxSlices/slices"
 
 const store = configureStore({
     reducer: {

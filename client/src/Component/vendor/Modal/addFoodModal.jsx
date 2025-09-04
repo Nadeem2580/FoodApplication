@@ -1,24 +1,21 @@
-import * as React from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
 import {
     Box,
     Button,
-    Typography,
-    Modal,
-    MenuItem,
-    TextField,
-    Switch,
     FormControlLabel,
+    MenuItem,
+    Modal,
+    Switch,
+    TextField,
+    Typography,
 } from "@mui/material";
-import { useForm, Controller } from "react-hook-form";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useState } from "react";
-import Cookies from "js-cookie";
+import { useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { setAddFood, setEditFood, setIsRefresh } from "../../../ReduxSlices/slices";
+import * as yup from "yup";
 import api from "../../../Pages/Utils/axiosConfig";
 import toastAlert from "../../../Pages/Utils/utils";
-import { useEffect } from "react";
+import { setAddFood, setEditFood, setIsRefresh } from "../../../ReduxSlices/slices";
 
 const style = {
     position: "absolute",

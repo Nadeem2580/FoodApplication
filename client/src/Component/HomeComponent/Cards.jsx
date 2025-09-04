@@ -1,4 +1,4 @@
-import { Card, CardContent, CardMedia, Typography, Chip, Box, Button } from "@mui/material";
+import { Box, Button, Card, CardContent, CardMedia, Chip, Typography } from "@mui/material";
 
 const HomeCards = () => {
   return (

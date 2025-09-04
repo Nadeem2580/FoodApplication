@@ -36,4 +36,4 @@ const { setIsRefresh, setUsers, setRestaurant, setVendor } = actions
 
 const adminReducer = reducer
 
-export { adminReducer, setIsRefresh, setUsers, setRestaurant, setVendor }
+export { adminReducer, setIsRefresh, setRestaurant, setUsers, setVendor };

@@ -1,20 +1,18 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
-import { Stack } from '@mui/material';
-import saylaniPapa from "../../assets/saylaniPapa.png"
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import Cookie from "js-cookie"
-import axios from "../../Pages/Utils/axiosConfig"
-import { useDispatch, useSelector } from 'react-redux';
-import { setIsRefresh, setRole } from '../../ReduxSlices/slices';
+import { Stack } from '@mui/material';
+import AppBar from '@mui/material/AppBar';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import IconButton from '@mui/material/IconButton';
 import { motion } from "framer-motion";
+import Cookie from "js-cookie";
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
+import saylaniPapa from "../../assets/saylaniPapa.png";
+import axios from "../../Pages/Utils/axiosConfig";
+import { setIsRefresh, setRole } from '../../ReduxSlices/slices';
 
 function Navbar() {
   const { isRefresh } = useSelector((store) => store.Counter)

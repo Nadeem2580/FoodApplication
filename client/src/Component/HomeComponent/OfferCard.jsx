@@ -1,5 +1,4 @@
-import { Box, Button, Container, Grid, Stack, Typography } from '@mui/material'
-import React from 'react'
+import { Box, Container, Grid, Stack, Typography } from '@mui/material'
 import { motion } from "framer-motion"
 
 const OfferCard = () => {

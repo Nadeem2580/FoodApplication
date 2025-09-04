@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { RestaurantTable } from '../../Component/admin/AdminTable'
 
 const AdminRestaurant = () => {

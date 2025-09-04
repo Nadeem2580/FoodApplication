@@ -1,9 +1,10 @@
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import FastfoodIcon from '@mui/icons-material/Fastfood';
-import FlatwareIcon from '@mui/icons-material/Flatware';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import GroupIcon from '@mui/icons-material/Group';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
+import PersonIcon from '@mui/icons-material/Person';
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import { Button } from '@mui/material';
 import MuiAppBar from '@mui/material/AppBar';
@@ -24,9 +25,6 @@ import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { setRole } from '../../ReduxSlices/slices';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import PersonIcon from '@mui/icons-material/Person';
-import GroupIcon from '@mui/icons-material/Group';
 
 const drawerWidth = 240;
 

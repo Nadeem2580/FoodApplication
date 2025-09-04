@@ -37,5 +37,5 @@ const { actions, reducer } = cartSlice
 const { addToCart, removeFromCart, clearCart,decreaseQuantity } = actions;
 const addCart = reducer
 export {
-    addCart, addToCart, removeFromCart, clearCart,decreaseQuantity
-}
+    addCart, addToCart, clearCart, decreaseQuantity, removeFromCart
+};

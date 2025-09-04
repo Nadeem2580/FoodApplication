@@ -1,11 +1,11 @@
+import { Container, Grid } from '@mui/material'
 import { useEffect, useState } from 'react'
-import api from '../Utils/axiosConfig'
-import toastAlert from '../Utils/utils'
+import { useSelector } from 'react-redux'
 import Loading from '../../../Loader/Loading'
 import FoodCard from '../../Component/vendor/Cards/FoodCard'
-import { Container, Grid } from '@mui/material'
 import AddFoodModal from '../../Component/vendor/Modal/addFoodModal'
-import { useSelector } from 'react-redux'
+import api from '../Utils/axiosConfig'
+import toastAlert from '../Utils/utils'
 
 const Foods = () => {
   const { isRefresh, editFood } = useSelector((store) => store.Counter)

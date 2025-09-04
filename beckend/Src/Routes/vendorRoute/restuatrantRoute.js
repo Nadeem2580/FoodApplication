@@ -1,6 +1,6 @@
 import express from "express"
-import authMiddleware from "../../Middleware/authMiddleware.js"
 import { add_food_controller, all_restaurant, create_restaurant, delete_food_controller, delete_restaurant, edit_restaurant_contorller, fetch_food_controller, fetch_order, get_all_restaurant, restaurant_open_controller, updata_status, update_food_controller } from "../../Controller/restaurantController.js"
+import authMiddleware from "../../Middleware/authMiddleware.js"
 
 const vendorRouter = express.Router()
 

@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import Cookie from 'js-cookie'
+import { Container, Grid } from '@mui/material'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import toastAlert from '../Utils/utils'
-import api from '../Utils/axiosConfig'
-import { setCreateResModal, setIsRefresh, setRestaurant, setSelectedRestaurant } from '../../ReduxSlices/slices'
 import Loading from '../../../Loader/Loading'
 import RestaurantCard from '../../Component/vendor/Cards/RestaurantCard'
 import AddFoodModal from '../../Component/vendor/Modal/addFoodModal'
 import CreateRestaurant from '../../Component/vendor/Modal/CreateRestaurant'
-import { Container, Grid } from '@mui/material'
+import { setCreateResModal, setIsRefresh, setRestaurant, setSelectedRestaurant } from '../../ReduxSlices/slices'
+import api from '../Utils/axiosConfig'
+import toastAlert from '../Utils/utils'
 const RestaurantPage = () => {
     const dispatch = useDispatch()
     const { role, isRefresh, restaurant, createResModal, selectedRestaurant ,addFood} = useSelector((store) => store.Counter)

@@ -1,8 +1,7 @@
-import React from 'react'
-import pizza from "../../assets/pizza.jpg"
-import { Box, Button, Typography } from '@mui/material'
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import { motion } from "framer-motion"
+import { Box, Button, Typography } from '@mui/material';
+import { motion } from "framer-motion";
+import pizza from "../../assets/pizza.jpg";
 
 const Hero = () => {
   // Parent container variants
