@@ -16,33 +16,28 @@ const Orders = () => {
   useEffect(() => {
     fetchOrder()
   }, [isRefresh])
-  
-  
-  
-  useEffect(() => {
-    const newSocket = io("http://localhost:5000", { withCredentials: true });
+
+
+
+useEffect(() => {
+  const newSocket = io("http://localhost:5000", { withCredentials: true });
   setSocket(newSocket);
 
-  // Listen for order status update (backend se aayega)
-  socket.on("order_status_updated", (updatedOrder) => {
-    
-      // Agar orders ka state maintain karte ho, to yahan update karna
-      setOrder(prev => prev.map(o => o._id === updatedOrder._id ? updatedOrder : o));
-    });
+  // ✅ use newSocket directly
+  newSocket.on("order_status_updated", (updatedOrder) => {
+    setOrder(prev => prev.map(o => o._id === updatedOrder._id ? updatedOrder : o));
+  });
 
-    // Listen for message example
-    socket.on("message", (msg) => {
-    });
+  newSocket.on("message", (msg) => {
+    console.log("Message received:", msg);
+  });
 
-    return () => {
-      socket.off("connect");
-      socket.off("order_status_updated");
-      socket.off("message");
-    };
-    return () => {
-      newSocket.disconnect(); // cleanup
-    };
-  }, []);
+  return () => {
+    newSocket.off("order_status_updated");
+    newSocket.off("message");
+    newSocket.disconnect();
+  };
+}, []);
 
 
 
@@ -61,36 +56,37 @@ const Orders = () => {
 
   const orderStatus = async (id, status) => {
     try {
-      const orders = await api.patch(`/api/vendor/order/${id}`, { status });
-      dispatch(setIsRefresh(!isRefresh))
-      socket.emit("message", { text: status, sender: "vendor" });
-      toastAlert({
-        message: "status updated",
-        type: "success"
-      })
+      const response = await api.patch(`/api/vendor/order/${id}`, { status });
+      const updatedOrder = response.data.data;
 
+      // ✅ Notify backend via socket
+      socket.emit("update_order_status", updatedOrder);
+
+      dispatch(setIsRefresh(!isRefresh));
+      toastAlert({
+        message: "Status updated",
+        type: "success"
+      });
     } catch (error) {
       toastAlert({
         message: error.message || "Something went wrong",
         type: "error"
-      })
+      });
     }
-  }
+  };
 
 
-  return (
-    orders.length === 0 ? (
-      <Loading />
-    ) : (
-      orders.map((order, index) => (
-       <Container maxWidth="lg">
-         <Grid container spacing={2}>
-          <Grid size={{ xs: 12, md: 6, lg: 4, xl: 3 }}>
+ return (
+  orders.length === 0 ? (
+    <Loading />
+  ) : (
+    <Container maxWidth="lg">
+      <Grid container spacing={2}>
+        {orders.map((order, index) => (
+          <Grid key={index} size={{ xs: 12, md: 6, lg: 4, xl: 3 }}>
             <Card
-              key={index}
               sx={{
                 maxWidth: 400,
-                // m: "16px 0",
                 borderRadius: 2,
                 boxShadow: 3,
                 bgcolor: "#fafafa",
@@ -179,11 +175,11 @@ const Orders = () => {
               </CardContent>
             </Card>
           </Grid>
-        </Grid>
-       </Container>
-      ))
-    )
-  );
+        ))}
+      </Grid>
+    </Container>
+  )
+);
 
 };
 

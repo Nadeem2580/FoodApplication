@@ -8,29 +8,32 @@ import { clearCart } from "../../ReduxSlices/AddToCart";
 
 const ConfirmOrdder = ({ orderId }) => {   // 🔹 orderId props se ya API response se lena hoga
     const { items } = useSelector((store) => store.cart);
-    const [orderStatus, setOrderStatus] = useState("pending"); // 🔹 default pending
+    const [order, setOrder] = useState("Pending"); // 🔹 default pending
+    const [socket, setSocket] = useState(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [currentStatus, setCurrentStatus] = useState(null)
     useEffect(() => {
-        const socket = io("http://localhost:5000", { withCredentials: true });
-        socket.on("connect", () => {
+        const newSocket = io("http://localhost:5000", { withCredentials: true });
+        setSocket(newSocket);
+
+        // ✅ Use newSocket directly here
+        newSocket.on("order_status_updated", (updatedOrder) => {
+            console.log(updatedOrder.status , "updatedOrder")
+            setOrder(updatedOrder.status)
+            // setOrder(prev => prev.map(o => o._id === updatedOrder._id ? updatedOrder : o));
         });
 
-        // Listen for order status update
-        socket.on("order_status_updated", (updatedOrder) => {
-            setCurrentStatus(updatedOrder)
-            // Sirf current order ka status update karein
-            if (updatedOrder._id === orderId) {
-                setOrderStatus(updatedOrder.status);
-            }
+        newSocket.on("message", (msg) => {
+            console.log("Message received:", msg);
         });
 
         return () => {
-            socket.off("connect");
-            socket.off("order_status_updated");
+            newSocket.off("order_status_updated");
+            newSocket.off("message");
+            newSocket.disconnect(); // cleanup
         };
-    }, [orderId]);
+    }, []);
 
     return (
         <Box sx={{ minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center", bgcolor: "#f9fafb", p: 2 }}>
@@ -53,7 +56,7 @@ const ConfirmOrdder = ({ orderId }) => {   // 🔹 orderId props se ya API respo
                 {/* ✅ Live Order Status */}
                 <Box sx={{ mb: 3, p: 2, borderRadius: "10px", bgcolor: "#e0f2fe" }}>
                     <Typography variant="subtitle1" sx={{ fontWeight: "bold", color: "#0369a1" }}>
-                        Current Status: {currentStatus.status}
+                        Current Status: {order}
                     </Typography>
                 </Box>
 
@@ -87,11 +90,11 @@ const ConfirmOrdder = ({ orderId }) => {   // 🔹 orderId props se ya API respo
 
                 {/* Buttons */}
                 <Box sx={{ display: "flex", justifyContent: "center", gap: 2, mt: 3 }}>
-                    {currentStatus.status === "rejected" ? <Button variant="outlined" color="error" onClick={() => {
+                    {order === "rejected" ? <Button variant="outlined" color="error" onClick={() => {
                         dispatch(clearCart());
                         navigate("/user-dashboard", { replace: true });
                     }}>Back to Home</Button>
-                        : currentStatus.status === "delivered" ? <Button variant="outlined" color="success" onClick={() => {
+                        : order === "delivered" ? <Button variant="outlined" color="success" onClick={() => {
                             dispatch(clearCart());
                             navigate("/user-dashboard", { replace: true });
                         }}>Back to Home</Button> : null}
