@@ -1,96 +1,205 @@
 import LogoutIcon from '@mui/icons-material/Logout';
+import MenuIcon from '@mui/icons-material/Menu';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Stack } from '@mui/material';
+import { Box, Stack } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
-import { motion } from "framer-motion";
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import Cookie from "js-cookie";
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import saylaniPapa from "../../assets/saylaniPapa.png";
 import axios from "../../Pages/Utils/axiosConfig";
-import { setIsRefresh, setRole } from '../../ReduxSlices/slices';
-
+import { setRole } from '../../ReduxSlices/slices';
 function Navbar() {
+
   const { isRefresh } = useSelector((store) => store.Counter)
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const token = Cookie.get("token")
   let dispatch = useDispatch()
+  const [anchorButton, setAnchorButton] = React.useState(null);
   const navigate = useNavigate()
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+  const handleOpenButtonMenu = (event) => {
+    setAnchorButton(event.currentTarget)
+  }
+
+  const handleCloseButtonMenu = () => {
+    setAnchorButton(null)
+  }
 
   const logoutFunc = () => {
     Cookie.remove("token")
     Cookie.set(null)
     axios.defaults.baseURL = ""
     dispatch(setRole(null))
-    dispatch(setIsRefresh(!isRefresh))
     navigate("/")
   }
+  const ButtonswithBascket = () => {
+    return (
+      <Box sx={{ display: "flex", gap: "15px" }}>
+        <IconButton >
 
-  // Parent container animation for buttons (staggered children)
-  const buttonContainer = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: { staggerChildren: 0.25 } // delay between each button
-    }
+          <ShoppingCartIcon sx={{ color: "#fff" }} />
+
+        </IconButton>
+        <Link to={"/login"} style={{ textDecoration: "none", color: "#3b82f6", display: "flex", alignItems: "center" }}>
+          <Button sx={{ background: "white", padding: "10px 20px", fontSize: "13px", fontWeight: "700", ":hover": { background: "#3b82f6", color: "#fff" } }}>
+            <PersonOutlineIcon /> Sign in </Button></Link>
+
+
+        {token && <Button onClick={logoutFunc} variant='contained' sx={{ display: "flex", alignItems: "center", gap: "5px", fontSize: "10px", fontWeight: 700 }}>
+          Log out<LogoutIcon sx={{ fontSize: "12px", color: "#fff" }} />
+        </Button> }
+      </Box>
+    )
   }
 
-  // Individual button animation
-  const buttonItem = {
-    hidden: { opacity: 0, y: 40 },
-    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 80 } }
-  }
 
   return (
     <>
-      <AppBar position="sticky" sx={{ background: "#8dc63f", boxShadow: "0 2px 10px rgba(0,0,0,0.1)" }}>
+      <AppBar position="static" sx={{ background: "#8dc63f" }}>
         <Container maxWidth="xl">
-          <Stack justifyContent={"space-between"} direction={"row"} alignItems="center">
 
-            {/* Logo left to right */}
-            <motion.img
-              src={saylaniPapa}
-              alt="logo"
-              width={200}
-              height={80}
-              initial={{ x: -150, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 3, type: "spring" }}
-            />
+          <Stack justifyContent={"space-between"} direction={"row"}>
+            {/* Image logo  */}
+            <Box >
+              <img src={saylaniPapa} alt="" width={200} height={80} />
+            </Box>
+            {/* Home about links are maping */}
+            <Box sx={{ display: { xs: 'none', md: 'flex', alignItems: "center" } }}>
+              {/* {links.map((page) => (
+                <MenuItem key={page.title} onClick={handleCloseNavMenu}>
+                  <Typography sx={{ textAlign: 'center', fontSize: "13px" }}>
+                    <Link to={page.url} style={{ textDecoration: "none", color: "white", display: "flex", gap: "5px" }}>
+                      {page.icon}
+                      {page.title}
+                    </Link>
+                  </Typography>
+                </MenuItem>
+              ))} */}
+            </Box>
+            <Box sx={{ display: { xs: "none", lg: "flex" }, alignItems: "center" }}>
+              <ButtonswithBascket />
+            </Box>
+            {/* Large screen button and basket (md only) */}
+            <Box sx={{ display: { xs: "none", md: "flex", lg: "none" }, alignItems: "center" }}>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-button"
+                aria-haspopup="true"
+                onClick={handleOpenButtonMenu}
+                color="inherit"
+              >
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                id="menu-button"
+                anchorEl={anchorButton}   // ✅ yaha pe anchorButton
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+                open={Boolean(anchorButton)}   // ✅ is menu ka apna state
+                onClose={handleCloseButtonMenu}
+                sx={{ marginTop: "18px", marginLeft: "8px" }}
+              >
+                {/* {links.map((page) => (
+                  <MenuItem key={page.title} onClick={handleCloseButtonMenu} sx={{ background: "#8dc63f", ":hover": { background: "#4a7212ff" } }} >
+                    <Typography sx={{ textAlign: 'center' }}>
+                      <Link to={page.url} style={{ textDecoration: "none", color: "white", display: "flex", gap: "5px" }}>
+                        {page.icon}
+                        {page.title}
+                      </Link>
+                    </Typography>
+                  </MenuItem>
+                ))} */}
+                <MenuItem sx={{ background: "#8dc63f", ":hover": { background: "#4a7212ff" } }}>
+                  <ButtonswithBascket />
+                </MenuItem>
+              </Menu>
+              {token && <Button onClick={logoutFunc} variant='contained' sx={{ display: "flex", alignItems: "center", gap: "5px", fontSize: "10px", fontWeight: 700 }}>
+          Log out<LogoutIcon sx={{ fontSize: "12px", color: "#fff" }} />
+        </Button> }
 
-            {/* Basket + Buttons staggered */}
-            <motion.div
-              style={{ display: "flex", gap: "15px", alignItems: "center" }}
-              variants={buttonContainer}
-              initial="hidden"
-              animate="show"
-            >
-              {/* Basket */}
-              <motion.div variants={buttonItem}>
-                <IconButton>
-                  <ShoppingCartIcon sx={{ color: "#fff" }} />
-                </IconButton>
-              </motion.div>
+            </Box>
 
-              {/* Sign in */}
-              <motion.div variants={buttonItem}>
-                <Link to={"/login"} style={{ textDecoration: "none" }}>
-                  <Button sx={{ background: "white", padding: "10px 20px", fontSize: "13px", fontWeight: "700", ":hover": { background: "#3b82f6", color: "#fff" } }}>
-                    <PersonOutlineIcon /> Sign in
-                  </Button>
-                </Link>
-              </motion.div>
+            {/* Mobile menu (xs only) */}
+            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }, justifyContent: "end" }}>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
+              >
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{ display: { xs: 'block', md: 'none' } }}
+              >
+                {/* {links.map((page) => (
+                  <MenuItem key={page.title} onClick={handleCloseNavMenu} sx={{ background: "#8dc63f", ":hover": { background: "#4a7212ff" } }} >
+                    <Typography sx={{ textAlign: 'center' }}>
+                      <Link to={page.url} style={{ textDecoration: "none", color: "white", display: "flex", gap: "5px" }}>
+                        {page.icon}
+                        {page.title}
+                      </Link>
+                    </Typography>
+                  </MenuItem>
+                ))} */}
 
-              {/* Logout */}
-              <motion.div variants={buttonItem}>
-                <Button onClick={logoutFunc} variant='contained' sx={{ display: "flex", alignItems: "center", gap: "5px", fontSize: "10px", fontWeight: 700,padding:"13px 20px" }}>
-                  Log out <LogoutIcon sx={{ fontSize: "12px", color: "#fff" }} />
-                </Button>
-              </motion.div>
-            </motion.div>
+                {/* <MenuItem sx={{ background: "#8dc63f", ":hover": { background: "#4a7212ff" } }}>
+                  <ButtonswithBascket />
+                </MenuItem> */}
+              </Menu>
+
+            </Box>
+
+
+
           </Stack>
+
+
         </Container>
       </AppBar>
       <Outlet />

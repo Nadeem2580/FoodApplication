@@ -108,7 +108,7 @@ function UserNavbar() {
                             <img src={saylaniPapa} alt="" width={200} height={80} />
                         </Box>
                         {/* Home about links are maping */}
-                        <Box sx={{ display: { xs: 'none', md: 'flex', alignItems: "center" } }}>
+                        <Box sx={{ display: { xs: 'none', lg: 'flex', alignItems: "center" } }}>
                             {links.map((page) => (
                                 <MenuItem key={page.title} onClick={handleCloseNavMenu}>
                                     <Typography sx={{ textAlign: 'center', fontSize: "13px" }}>
@@ -165,7 +165,7 @@ function UserNavbar() {
                                     <ButtonswithBascket />
                                 </MenuItem>
                             </Menu>
-                            <Button onClick={logoutFunc} variant='contained' sx={{ display: "flex", alignItems: "center", gap: "5px", fontSize: "10px", fontWeight: 700 }}>
+                            <Button onClick={logoutFunc} variant='contained' sx={{ display: {xs:"none" , lg:"flex"}, alignItems: "center", gap: "5px", fontSize: "10px", fontWeight: 700 }}>
                                 Log out<LogoutIcon sx={{ fontSize: "12px", color: "#fff" }} />
                             </Button>
 

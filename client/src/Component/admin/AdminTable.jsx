@@ -179,6 +179,7 @@ export function VendorTable({ header, data, show }) {
 
 
 export function RestaurantDashboard({ header, data, show }) {
+    console.log(header, "header")
     const [openDetail, setOpenDetail] = React.useState(false);
     const [openAddress, setOpenAddress] = React.useState(false);
     const dispatch = useDispatch()
@@ -217,7 +218,6 @@ export function RestaurantDashboard({ header, data, show }) {
                                     {item.approvedStatus ? "Approved" : item.approvedStatus === "pending" ? "pending" : "rejected"}
                                 </TableCell>
 
-                                <TableCell align="center">{item.email}</TableCell>
                                 <TableCell align="center">{item.contactNumber}</TableCell>
                                 <TableCell align="center"><Button onClick={() => { setOpenDetail(true); dispatch(setSelectedRestaurant(item)) }} sx={{ fontSize: "13px", textTransform: "capitalize", backgroundColor: "#3b82f6", color: "#fff" }}>Detail</Button></TableCell>
                                 <TableCell align="center"><Button onClick={() => { setOpenAddress(true); dispatch(setSelectedRestaurant(item)); }} sx={{ fontSize: "13px", textTransform: "capitalize", backgroundColor: "#3b82f6", color: "#fff" }}>Address</Button></TableCell>
@@ -260,7 +260,7 @@ export function RestaurantTable({ header, data, show }) {
 
                 const userUpdate = await api.patch(`/api/admin/updat-restaurant/${data._id}`, obj)
                 toastAlert({
-                    message: `${obj.isOpen} is updated`,
+                    message: `Status is updated`,
                     type: "success"
                 })
             }
@@ -270,7 +270,7 @@ export function RestaurantTable({ header, data, show }) {
                 }
                 const userUpdate = await api.patch(`/api/admin/updat-restaurant/${data._id}`, obj)
                 toastAlert({
-                    message: `${obj.approvedStatus} is updated`,
+                    message: `Status is updated`,
                     type: "success"
                 })
 

@@ -27,7 +27,6 @@ export default function CartSideBar({ open, setOpen }) {
     dispatch(clearCart());
   };
 
-  console.log(items)
 
   const confirmOrderFunc = async () => {
 
