@@ -40,7 +40,7 @@ const Foods = () => {
               :
               foodItem.map((card, index) => (
 
-                <Grid key={card._id} size={{ xs: 12, md: 6, lg: 4, xl: 3 }} >
+                <Grid key={card._id} size={{ xs: 12, md: 6, lg: 4 }} >
                   <FoodCard foodItem={foodItem} item={card} />
                 </Grid>
 
