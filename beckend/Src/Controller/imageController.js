@@ -3,25 +3,25 @@ import { cloudinaryUplaoder } from "../Config/cloudinary.js"
 
 export const image_contoller = async (req, res) => {
     try {
-        // any k lye hum files[0] use karte hain
-        // agar hum single use karenge to hamen file milega object mil jayega path isi main
-        const filePath = req.files[0].path
-        if (!filePath) {
-            return res.status(400).json({
-                message: "no file uploaded"
-            })
+        if (!req.files || !req.files[0]) {
+            return res.status(400).json({ message: "No file uploaded" });
         }
-        const imageResponse = await cloudinaryUplaoder.upload(filePath)
 
-        fs.unlink(filePath, (err, res) => {
-            // 
-        })
+        const file = req.files[0];
+        console.log(file, "file")
+        const base64 = `data:${file.mimetype};base64,${file.buffer.toString("base64")}`;
+        console.log(base64, "base64")
 
-        res.status(200).json({
-            message: "success",
+        // Upload directly to Cloudinary
+        const imageResponse = await cloudinaryUplaoder.upload(base64, {
+            folder: "uploads",
+        });
+
+        return res.status(200).json({
+            message: "Image uploaded successfully",
             status: true,
-            data: imageResponse
-        })
+            data: imageResponse,
+        });
     } catch (error) {
         res.status(500).json({
             message: error.message,
