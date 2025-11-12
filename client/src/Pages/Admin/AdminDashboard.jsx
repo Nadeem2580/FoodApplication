@@ -9,7 +9,7 @@ const AdminDashboard = () => {
   const { isRefresh, users, restaurant, vendor } = useSelector((store) => store.Admin)
   const dispatch = useDispatch()
   const userHeader = ["_id", "Full Name", "Type", "Email", "Status"]
-  const restaurantHeader = ["_id", "Restaurant Name", "Category", "Email", "Contact Number", "Address", "Details", "IsOpen"]
+  const restaurantHeader = ["_id", "Restaurant Name", "Category", "Email", "Contact Number", "Address", "Details", "Address"]
 
   useEffect(() => {
     fetchUser()

@@ -16,6 +16,7 @@ const UserOrder = () => {
   return (
     <>
       {
+        userOrder.length == 0 ? <h1>No Order found</h1> :
         userOrder.map((item, index) => {
           return (
             <Container maxWidth="lg" sx={{marginTop:"50px"}}>

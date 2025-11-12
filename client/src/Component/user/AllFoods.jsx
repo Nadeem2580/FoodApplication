@@ -8,69 +8,62 @@ import OderFoodCard from './FoodCard'
 
 const AllFoods = () => {
     const [foodItem, setFoodItem] = useState([])
-    const [userId, setUserID] = useState([])
+    const [userId, setUserID] = useState(null)
+    const [loading, setLoading] = useState(false)
     const { id } = useParams()
     const location = useLocation()
-    const path = location.pathname.slice(0, 14)
-    console.log(path, "path")
+
     useEffect(() => {
         allFood()
     }, [])
 
-
     const allFood = async () => {
         try {
-            if (path == "/all-home-food") {
-                const res = await api.get(`/api/orders/all-home-foods/${id}`)
-                setFoodItem(res.data.data)
-                // const userId = res.data.userId
-                // setUserID(userId)
+            setLoading(true)
+            const isHomeFood = location.pathname.includes("all-home-food")
 
-            } else {
-                console.log("other")
-                const res = await api.get(`/api/orders/all-foods/${id}`)
-                setFoodItem(res.data.data)
-                const userId = res.data.userId
-                setUserID(userId)
+            const endpoint = isHomeFood
+                ? `/api/orders/all-home-foods/${id}`
+                : `/api/orders/all-foods/${id}`
+
+            const res = await api.get(endpoint)
+            setFoodItem(res.data.data)
+
+            if (!isHomeFood && res.data.userId) {
+                setUserID(res.data.userId)
             }
 
-
-
+            setLoading(false)
         } catch (error) {
-            console.log(error.response.data.message)
+            setLoading(false)
+            console.log(error?.response?.data?.message || error.message)
             toastAlert({
-                message: error.message,
-                type: "error"
+                message: error?.response?.data?.message || "Failed to fetch foods",
+                type: "error",
             })
         }
     }
 
-
-
     return (
-        <>
-
-            <Container sx={{ margin: "30px auto" }}>
-
-                <Grid spacing={2} container>
-
-                    {
-                        foodItem.length == 0 ?
-                            <Grid size={{ xs: 12 }} sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "200px" }}>
-                                <Loading />
-                            </Grid> :
-                            (
-                                foodItem.map((food, index) => (
-                                    <Grid key={index} size={{ xs: 12, md: 6, lg: 4, xl: 3 }}>
-                                        <OderFoodCard food={food} userId={userId} />
-
-                                    </Grid>
-                                ))
-                            )
-                    }
-                </Grid>
-            </Container>
-        </>
+        <Container sx={{ margin: "30px auto" }}>
+            <Grid container spacing={2}>
+                {loading ? (
+                    <Grid size={{ xs: 12 }} sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "200px" }}>
+                        <Loading />
+                    </Grid>
+                ) : foodItem.length === 0 ? (
+                    <Grid size={{ xs: 12 }} sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "200px" }}>
+                        <h1>No Food Found</h1>
+                    </Grid>
+                ) : (
+                    foodItem.map((food, index) => (
+                        <Grid key={index} size={{ xs: 12, md: 6, lg: 4, xl: 3 }}>
+                            <OderFoodCard food={food} userId={userId} />
+                        </Grid>
+                    ))
+                )}
+            </Grid>
+        </Container>
     )
 }
 
